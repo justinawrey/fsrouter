@@ -54,7 +54,5 @@ export default async function fsRouter(rootDir: string): Promise<Handler> {
     routeMap.set(route, handler);
   }
 
-  console.log(routeMap);
-
   return handleRoutes(routeMap);
 }
