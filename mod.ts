@@ -28,7 +28,7 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
 // The provided handler will be used to execute requests if the requested route
 // matches the file's position in the filesystem.
 export default async function fsRouter(rootDir: string): Promise<Handler> {
-  const routeMap = new Map();
+  const routeMap: RouteMap = new Map();
 
   const walkOpts: WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
