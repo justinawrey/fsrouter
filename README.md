@@ -29,6 +29,11 @@ import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
 serve(await fsRouter("pages"));
 ```
 
-Routes are then served as follows: | File | Route |
-|---------------------|------------| | pages/index.ts | / | | pages/about.ts |
-/about | | pages/blog/index.ts | /blog | | pages/blog/post.ts | /blog/post |
+Routes are then served as follows:
+
+| File                  | Route        |
+| --------------------- | ------------ |
+| `pages/index.ts`      | `/`          |
+| `pages/about.ts`      | `/about`     |
+| `pages/blog/index.ts` | `/blog`      |
+| `pages/blog/post.ts`  | `/blog/post` |
