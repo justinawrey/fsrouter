@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 'lts/*'
 
+      - name: Install release dependencies
+        run: npm install @semantic-release/changelog @semantic-release/git
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
