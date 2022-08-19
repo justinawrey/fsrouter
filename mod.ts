@@ -1,4 +1,4 @@
-import { Handler, join, parse, relative, walk } from "./deps.ts";
+import { type Handler, join, parse, relative, walk } from "./deps.ts";
 
 export default async function fsRouter(path: string): Promise<Handler> {
   const pathMap = new Map<string, Handler>();
