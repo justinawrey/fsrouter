@@ -21,7 +21,6 @@ And the following `mod.ts`:
 
 ```typescript
 // my-app/mod.ts
-
 import fsRouter from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
 import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
 
