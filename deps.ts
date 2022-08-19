@@ -1,10 +1,4 @@
-export {
-  extname,
-  join,
-  parse,
-  relative,
-  resolve,
-} from "https://deno.land/std@0.152.0/path/mod.ts";
+export { relative, resolve } from "https://deno.land/std@0.152.0/path/mod.ts";
 export {
   walk,
   type WalkOptions,
