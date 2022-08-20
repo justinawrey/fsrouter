@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/justinawrey/fsrouter/compare/v1.0.0...v1.1.0) (2022-08-20)
+
+
+### Features
+
+* respond with 404 on invalid routes ([803150b](https://github.com/justinawrey/fsrouter/commit/803150b5a02908c4f589f1d36cc7f516339bd4b1))
+
 ## 1.0.0 (2022-08-19)
 
 
