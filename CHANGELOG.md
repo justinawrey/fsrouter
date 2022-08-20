@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/justinawrey/fsrouter/compare/v2.1.1...v2.1.2) (2022-08-20)
+
+
+### Bug Fixes
+
+* deno.land/x/fsrouter docs update ([ec04a46](https://github.com/justinawrey/fsrouter/commit/ec04a4694600fdddb22cb7b4ad6bb17cc6eeb2c7))
+
 ## [2.1.1](https://github.com/justinawrey/fsrouter/compare/v2.1.0...v2.1.1) (2022-08-20)
 
 
