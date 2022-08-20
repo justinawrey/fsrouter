@@ -32,7 +32,7 @@ Initialize `fsrouter` with the following `mod.ts`:
 
 ```typescript
 // my-app/mod.ts
-import fsRouter from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
+import { fsRouter } from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
 import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
 
 // Use the file system router with base directory 'pages'

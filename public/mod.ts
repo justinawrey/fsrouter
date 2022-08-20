@@ -62,15 +62,61 @@ function bootMessage(fileMap: FileMap, rootDir: string) {
   console.log("");
 }
 
-type RouterOptions = {
+/**
+ * A collection of options to be passed in on initialization.
+ */
+interface RouterOptions {
+  /**
+   * Whether or not an information message should be shown on startup.
+   * Defaults to true.
+   */
   bootMessage?: boolean;
-};
+}
 
-// fsRouter creates a Handler which handles requests
-// according to the shape of the filesystem at the given rootDir.
-// Each file within rootDir must provide a Handler as its default export.
-// The provided handler will be used to execute requests if the requested route
-// matches the file's position in the filesystem.
+/**
+ * fsRouter creates a Handler which handles requests
+ * according to the shape of the filesystem at the given rootDir.
+ * Each file within rootDir must provide a Handler as its default
+ * export, which will be used to execute requests if the requested
+ * route matches the file's position in the filesystem.
+ *
+ * Given a project with the following folder structure:
+ *
+ * ```bash
+ * my-app/
+ * ├─ pages/
+ * │  ├─ blog/
+ * │  │  ├─ post.ts
+ * │  │  ├─ index.ts
+ * │  ├─ about.ts
+ * │  ├─ index.ts
+ * ├─ mod.ts
+ * ```
+ *
+ * Each "route file" must export a Handler as its default export:
+ *
+ * ```typescript
+ * // my-app/pages/blog/post.ts
+ * export default (req: Request) => {
+ *   return new Response("hello world!");
+ *  };
+ * ```
+ *
+ * Initialize `fsrouter`:
+ *
+ * ```typescript
+ * // my-app/mod.ts
+ * import { fsRouter } from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
+ * import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
+ *
+ *  // Use the file system router with base directory 'pages'
+ * serve(await fsRouter("pages"));
+ * ```
+ *
+ * @param rootDir The directory at which routes will be served
+ * @param opts An optional options object
+ * @returns A Promise which resolves to a Handler
+ */
 async function fsRouter(
   rootDir: string,
   opts: RouterOptions = {
@@ -113,4 +159,4 @@ async function fsRouter(
   return handleRoutes(routeMap);
 }
 
-export default fsRouter;
+export { fsRouter, type RouterOptions };

@@ -1,5 +1,5 @@
 import { serve } from "./deps.ts";
-import fsRouter from "../public/mod.ts";
+import { fsRouter } from "../public/mod.ts";
 
 if (!import.meta.main) {
   Deno.exit();
