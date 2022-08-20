@@ -111,6 +111,9 @@ interface RouterOptions {
  *
  * // Use the file system router with base directory 'pages'
  * serve(await fsRouter("pages"));
+ *
+ * // Or, provide an options (RouterOptions) object:
+ * // serve(await fsRouter("pages"), { bootMessage: false });
  * ```
  *
  * @param rootDir The directory at which routes will be served
