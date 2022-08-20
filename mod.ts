@@ -1,4 +1,11 @@
-import { type Handler, resolve, walk, type WalkOptions } from "./deps.ts";
+import {
+  errors,
+  type Handler,
+  isHttpError,
+  resolve,
+  walk,
+  type WalkOptions,
+} from "./deps.ts";
 import { parseRoute } from "./parse.ts";
 import type { MapValueType } from "./_util.ts";
 
@@ -12,8 +19,19 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
   return (req, connInfo) => {
     const route = new URL(req.url).pathname;
 
-    // TODO: This isn't a real 404
-    if (!routeMap.has(route)) return new Response("404");
+    // Respond with a 404 Not Found if asking for a route
+    // that does not exist
+    if (!routeMap.has(route)) {
+      try {
+        throw new errors.NotFound();
+      } catch (e) {
+        if (isHttpError(e)) {
+          return new Response(e.message, { status: e.status });
+        } else {
+          throw e;
+        }
+      }
+    }
 
     // Unfortunately we still have to assert the Handler type here, even though
     // we're now sure that the route indeed does exist in the route map
