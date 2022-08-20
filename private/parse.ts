@@ -1,4 +1,4 @@
-import { relative } from "../deps.ts";
+import { relative } from "std/path/mod.ts";
 
 // parseRoute takes an absolute file path and transforms it into
 // a valid route to which requests can be routed
