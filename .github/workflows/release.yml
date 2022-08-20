@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: "lts/*"
 
       - name: Install release dependencies
         run: npm install @semantic-release/changelog @semantic-release/git conventional-changelog-conventionalcommits
