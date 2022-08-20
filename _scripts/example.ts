@@ -1,5 +1,5 @@
-import { serve } from "std/http/server.ts";
-import { fromFileUrl } from "std/path/mod.ts";
+import { serve } from "../private/deps/std/http.ts";
+import { fromFileUrl } from "../private/deps/std/path.ts";
 import { fsRouter } from "../mod.ts";
 
 if (!import.meta.main) {
