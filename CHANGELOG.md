@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/justinawrey/fsrouter/compare/v2.0.0...v2.0.1) (2022-08-20)
+
+
+### Bug Fixes
+
+* typo in fsRouter jsdoc ([fdfda19](https://github.com/justinawrey/fsrouter/commit/fdfda19e052555bf7a10963d732fea3488bccfc1))
+
 ## [2.0.0](https://github.com/justinawrey/fsrouter/compare/v1.2.0...v2.0.0) (2022-08-20)
 
 
