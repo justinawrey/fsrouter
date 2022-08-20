@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/justinawrey/fsrouter/compare/v1.1.0...v1.2.0) (2022-08-20)
+
+
+### Features
+
+* add boot message ([ba8ca55](https://github.com/justinawrey/fsrouter/commit/ba8ca55dd4826f55b5015b2ba52b928a90d32c54))
+
 ## [1.1.0](https://github.com/justinawrey/fsrouter/compare/v1.0.0...v1.1.0) (2022-08-20)
 
 
