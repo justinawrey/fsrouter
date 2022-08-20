@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/justinawrey/fsrouter/compare/v1.2.0...v2.0.0) (2022-08-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* make fsRouter a named export of mod.ts
+
+### Features
+
+* make fsRouter a named export of mod.ts ([68e774b](https://github.com/justinawrey/fsrouter/commit/68e774bbd8e0feef0956f1c2704c09558751c0d6))
+
 ## [1.2.0](https://github.com/justinawrey/fsrouter/compare/v1.1.0...v1.2.0) (2022-08-20)
 
 
