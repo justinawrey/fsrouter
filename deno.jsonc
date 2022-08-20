@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "serve": "deno run --allow-read --allow-net main.ts example"
+  }
+}
