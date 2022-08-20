@@ -8,8 +8,8 @@ import {
   walk,
   type WalkOptions,
 } from "./deps.ts";
-import { parseRoute } from "./src/parse.ts";
-import type { MapValueType } from "./src/util.ts";
+import { parseRoute } from "./private/parse.ts";
+import type { MapValueType } from "./private/util.ts";
 
 // A map of route strings to their respective handler functions
 type RouteMap = Map<string, Handler>;
