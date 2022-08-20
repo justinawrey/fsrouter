@@ -1,5 +1,6 @@
 {
   "tasks": {
     "serve": "deno run --allow-read --allow-net _scripts/main.ts _example"
-  }
+  },
+  "importMap": "./import_map.json"
 }

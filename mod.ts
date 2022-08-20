@@ -1,13 +1,8 @@
-import {
-  bold,
-  cyan,
-  errors,
-  type Handler,
-  isHttpError,
-  resolve,
-  walk,
-  type WalkOptions,
-} from "./deps.ts";
+import { bold, cyan } from "std/fmt/colors.ts";
+import { walk, type WalkOptions } from "std/fs/walk.ts";
+import { errors, isHttpError } from "std/http/http_errors.ts";
+import { resolve } from "std/path/mod.ts";
+import { type Handler } from "std/http/server.ts";
 import { parseRoute } from "./private/parse.ts";
 import type { MapValueType } from "./private/util.ts";
 

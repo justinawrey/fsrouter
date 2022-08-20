@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "std/path/": "https://deno.land/std@0.152.0/path/",
+    "std/http/": "https://deno.land/std@0.152.0/http/",
+    "std/fs/": "https://deno.land/std@0.152.0/fs/",
+    "std/fmt/": "https://deno.land/std@0.152.0/fmt/"
+  }
+}

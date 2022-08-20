@@ -1,4 +1,4 @@
-import { serve } from "../deps.ts";
+import { serve } from "std/http/server.ts";
 import { fsRouter } from "../mod.ts";
 
 if (!import.meta.main) {
