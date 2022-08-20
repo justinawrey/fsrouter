@@ -1,4 +1,6 @@
 import {
+  bold,
+  cyan,
   errors,
   type Handler,
   isHttpError,
@@ -11,6 +13,9 @@ import type { MapValueType } from "./_util.ts";
 
 // A map of route strings to their respective handler functions
 type RouteMap = Map<string, Handler>;
+
+// A map of route string to their respective file names
+type FileMap = Map<string, string>;
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
@@ -40,13 +45,38 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
   };
 }
 
+function bootMessage(fileMap: FileMap, rootDir: string) {
+  console.log("");
+  console.log(
+    bold(
+      `Serving ${cyan(fileMap.size.toString())} routes from directory ${
+        cyan(rootDir)
+      }:\n`,
+    ),
+  );
+  fileMap.forEach((file, route) =>
+    console.log(`- ${bold(cyan(file))} -> ${bold(cyan(route))}`)
+  );
+  console.log("");
+}
+
+type RouterOptions = {
+  bootMessage?: boolean;
+};
+
 // fsRouter creates a Handler which handles requests
 // according to the shape of the filesystem at the given rootDir.
 // Each file within rootDir must provide a Handler as its default export.
 // The provided handler will be used to execute requests if the requested route
 // matches the file's position in the filesystem.
-async function fsRouter(rootDir: string): Promise<Handler> {
+async function fsRouter(
+  rootDir: string,
+  opts: RouterOptions = {
+    bootMessage: true,
+  },
+): Promise<Handler> {
   const routeMap: RouteMap = new Map();
+  const fileMap: FileMap = new Map();
 
   const walkOpts: WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
@@ -67,9 +97,15 @@ async function fsRouter(rootDir: string): Promise<Handler> {
     const route = parseRoute(absoluteRootDir, absolutePath);
 
     // Load up all of the files that should be handling routes and
-    // save the information in the route map
+    // save the information in respective maps
     const handler = (await import(absolutePath)).default;
     routeMap.set(route, handler);
+    fileMap.set(route, filePath.path);
+  }
+
+  // If RouterOptions.bootMessage = true, show startup stats
+  if (opts.bootMessage) {
+    bootMessage(fileMap, rootDir);
   }
 
   return handleRoutes(routeMap);

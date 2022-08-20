@@ -11,3 +11,4 @@ export {
   type Handler,
   serve,
 } from "https://deno.land/std@0.152.0/http/server.ts";
+export { bold, cyan } from "https://deno.land/std@0.152.0/fmt/colors.ts";
