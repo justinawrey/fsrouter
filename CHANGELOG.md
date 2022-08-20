@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/justinawrey/fsrouter/compare/v2.2.0...2.2.1) (2022-08-20)
+
+
+### Bug Fixes
+
+* remove import maps to ease dx ([4afd503](https://github.com/justinawrey/fsrouter/commit/4afd5034fdb0581d01573bb435370905b10e9cd5))
+
 ## [2.2.0](https://github.com/justinawrey/fsrouter/compare/v2.1.2...v2.2.0) (2022-08-20)
 
 
