@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/justinawrey/fsrouter/compare/v2.0.1...v2.1.0) (2022-08-20)
+
+
+### Features
+
+* add additional example in fsRouter jsdoc ([fb604e6](https://github.com/justinawrey/fsrouter/commit/fb604e6dc805b90260378dcf7557ce243622fe1a))
+
 ## [2.0.1](https://github.com/justinawrey/fsrouter/compare/v2.0.0...v2.0.1) (2022-08-20)
 
 
