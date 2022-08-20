@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/justinawrey/fsrouter/compare/v2.1.2...v2.2.0) (2022-08-20)
+
+
+### Features
+
+* add an easily runnable example.ts ([12ada92](https://github.com/justinawrey/fsrouter/commit/12ada92144a2f0037b6fff80e4cbe8d20dec9349))
+
 ## [2.1.2](https://github.com/justinawrey/fsrouter/compare/v2.1.1...v2.1.2) (2022-08-20)
 
 
