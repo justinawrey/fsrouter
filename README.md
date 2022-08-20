@@ -1,4 +1,4 @@
-# fsrouter
+# fsrouter ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release.yml/badge.svg)
 
 A file system based router for [Deno](https://deno.land).
 
