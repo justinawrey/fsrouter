@@ -17,7 +17,18 @@ my-app/
 ├─ mod.ts
 ```
 
-And the following `mod.ts`:
+Each "route file" must export a
+[Handler](https://deno.land/std@0.152.0/http/server.ts?s=Handler) as its default
+export:
+
+```typescript
+// my-app/pages/blog/post.ts
+export default (req: Request) => {
+  return new Response("hello world!");
+};
+```
+
+Initialize `fsrouter` with the following `mod.ts`:
 
 ```typescript
 // my-app/mod.ts
