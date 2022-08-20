@@ -6,7 +6,7 @@ A file system based router for [Deno](https://deno.land).
 
 Given a project with the following folder structure:
 
-```
+```bash
 my-app/
 ├─ pages/
 │  ├─ blog/
@@ -28,7 +28,13 @@ import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
 serve(await fsRouter("pages"));
 ```
 
-Routes are then served as follows:
+Now running:
+
+```bash
+deno run --allow-read --allow-net my-app/mod.ts
+```
+
+Results in routes being served as follows:
 
 | File                  | Route        |
 | --------------------- | ------------ |
@@ -36,3 +42,9 @@ Routes are then served as follows:
 | `pages/about.ts`      | `/about`     |
 | `pages/blog/index.ts` | `/blog`      |
 | `pages/blog/post.ts`  | `/blog/post` |
+
+---
+
+**Note**: since `fsrouter` requires access to both the network and the file
+system, `--allow-read` and `--allow-net` are required arguments when executing
+modules.
