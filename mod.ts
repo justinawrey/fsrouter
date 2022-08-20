@@ -45,7 +45,7 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
 // Each file within rootDir must provide a Handler as its default export.
 // The provided handler will be used to execute requests if the requested route
 // matches the file's position in the filesystem.
-export default async function fsRouter(rootDir: string): Promise<Handler> {
+async function fsRouter(rootDir: string): Promise<Handler> {
   const routeMap: RouteMap = new Map();
 
   const walkOpts: WalkOptions = {
@@ -74,3 +74,5 @@ export default async function fsRouter(rootDir: string): Promise<Handler> {
 
   return handleRoutes(routeMap);
 }
+
+export default fsRouter;
