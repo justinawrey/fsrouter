@@ -7,7 +7,7 @@ import {
   resolve,
   walk,
   type WalkOptions,
-} from "./src/deps.ts";
+} from "./deps.ts";
 import { parseRoute } from "./src/parse.ts";
 import type { MapValueType } from "./src/util.ts";
 
