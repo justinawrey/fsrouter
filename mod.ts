@@ -45,6 +45,8 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
   };
 }
 
+// Logs a boot message containing information about
+// which files map to which routes.
 function bootMessage(fileMap: FileMap, rootDir: string) {
   console.log("");
   console.log(
