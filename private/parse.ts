@@ -11,6 +11,8 @@ export function parseRoute(
   // TODO: this feels janky, although this should work just fine
   if (route.endsWith(".ts")) {
     route = route.slice(0, -3);
+  } else if (route.endsWith(".js")) {
+    route = route.slice(0, -3);
   }
 
   if (route.endsWith("index")) {
