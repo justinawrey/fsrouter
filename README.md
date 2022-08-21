@@ -63,6 +63,16 @@ Results in routes being served as follows:
 | `pages/blog/index.ts` | `/blog`      |
 | `pages/blog/post.ts`  | `/blog/post` |
 
+During development, you can use Deno's built-in `--watch=<folder>` to restart
+the server on changes. Providing a bare `--watch` has the caveat of not being
+able to detect new file additions, since by default Deno will watch only files
+it can statically discover. By providing a root directory, Deno will be able to
+detect new file additions as well:
+
+```bash
+deno run --allow-read --allow-net --watch=pages my-app/mod.ts
+```
+
 ---
 
 **Note**: since `fsrouter` requires access to both the network and the file
