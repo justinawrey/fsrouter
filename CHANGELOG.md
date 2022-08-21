@@ -1,3 +1,10 @@
+## [2.4.0](https://github.com/justinawrey/fsrouter/compare/2.3.0...2.4.0) (2022-08-21)
+
+
+### Features
+
+* support routes written in .js files ([342594d](https://github.com/justinawrey/fsrouter/commit/342594d6980394a50220b72b02c0f8f2896a6565))
+
 ## [2.3.0](https://github.com/justinawrey/fsrouter/compare/2.2.1...2.3.0) (2022-08-21)
 
 
