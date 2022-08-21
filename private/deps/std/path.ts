@@ -1,5 +1,4 @@
 export {
-  fromFileUrl,
   relative,
   resolve,
   toFileUrl,

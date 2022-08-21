@@ -1,5 +1,7 @@
 {
   "tasks": {
-    "example": "deno run --allow-read --allow-net _scripts/example.ts"
+    // run these from _scripts dir:
+    // deno task --cwd _scripts example
+    "example": "deno run --allow-read --allow-net --watch=pages example.ts"
   }
 }
