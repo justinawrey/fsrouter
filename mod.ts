@@ -45,9 +45,9 @@ function bootMessage(fileMap: FileMap, rootDir: string) {
   console.log("");
   console.log(
     bold(
-      `Serving ${cyan(fileMap.size.toString())} routes from directory ${
-        cyan(rootDir)
-      }:\n`,
+      `Serving ${cyan(fileMap.size.toString())} ${
+        fileMap.size === 1 ? "route" : "routes"
+      } from directory ${cyan(rootDir)}:\n`,
     ),
   );
   fileMap.forEach((file, route) =>
