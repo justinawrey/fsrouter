@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/justinawrey/fsrouter/compare/2.4.0...2.4.1) (2022-08-21)
+
+
+### Bug Fixes
+
+* file path issues when pulling from deno.land ([9077480](https://github.com/justinawrey/fsrouter/commit/90774801f23e17dbe3e0e3004e1b99fd0e1d9f5e))
+
 ## [2.4.0](https://github.com/justinawrey/fsrouter/compare/2.3.0...2.4.0) (2022-08-21)
 
 
