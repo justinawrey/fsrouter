@@ -1,3 +1,15 @@
+## [2.3.0](https://github.com/justinawrey/fsrouter/compare/2.2.1...2.3.0) (2022-08-21)
+
+
+### Features
+
+* show warning message if trying to serve from empty directory ([f7479c2](https://github.com/justinawrey/fsrouter/commit/f7479c278075604c82b99ceee03120b5d0aeae9d))
+
+
+### Bug Fixes
+
+* use proper grammar in boot message ([a0bc15c](https://github.com/justinawrey/fsrouter/commit/a0bc15c1b2b7302427e6d2fb3087e6e144f7b4e3))
+
 ## [2.2.1](https://github.com/justinawrey/fsrouter/compare/v2.2.0...2.2.1) (2022-08-20)
 
 
