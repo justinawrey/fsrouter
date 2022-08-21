@@ -110,7 +110,7 @@ export interface RouterOptions {
  * };
  * ```
  *
- * Initialize `fsrouter`:
+ * Initialize a server by calling `fsRouter`:
  *
  * ```typescript
  * // my-app/mod.ts

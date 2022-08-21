@@ -28,7 +28,16 @@ export default (req: Request) => {
 };
 ```
 
-Initialize `fsrouter` with the following `mod.ts`:
+`.js` files are fine as well:
+
+```javascript
+// my-app/pages/blog/post.js
+export default (req) => {
+  return new Response("hello world!");
+};
+```
+
+Initialize a server by calling `fsRouter`:
 
 ```typescript
 // my-app/mod.ts
