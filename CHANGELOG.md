@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/justinawrey/fsrouter/compare/2.4.1...2.4.2) (2022-08-21)
+
+
+### Bug Fixes
+
+* resolve path issues when running example directly from remote url ([32542b9](https://github.com/justinawrey/fsrouter/commit/32542b91f3fc8049ff224474f7850c1b44ce9280))
+
 ## [2.4.1](https://github.com/justinawrey/fsrouter/compare/2.4.0...2.4.1) (2022-08-21)
 
 
