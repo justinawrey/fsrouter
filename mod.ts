@@ -1,7 +1,7 @@
 import { bold, cyan, red } from "./private/deps/std/fmt.ts";
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { errors, type Handler, isHttpError } from "./private/deps/std/http.ts";
-import { resolve } from "./private/deps/std/path.ts";
+import { resolve, toFileUrl } from "./private/deps/std/path.ts";
 import { parseRoute } from "./private/parse.ts";
 import type { MapValueType } from "./private/util.ts";
 
@@ -151,8 +151,8 @@ export async function fsRouter(
   for await (const filePath of walk(rootDir, walkOpts)) {
     // Derive the correct route from raw file paths,
     // e.g. /example/blog/post.ts -> /blog/post (where example is the root directory)
-    const absolutePath = resolve(Deno.cwd(), filePath.path);
-    const absoluteRootDir = resolve(Deno.cwd(), rootDir);
+    const absolutePath = toFileUrl(resolve(Deno.cwd(), filePath.path)).href;
+    const absoluteRootDir = toFileUrl(resolve(Deno.cwd(), rootDir)).href;
     const route = parseRoute(absoluteRootDir, absolutePath);
 
     // Load up all of the files that should be handling routes and
