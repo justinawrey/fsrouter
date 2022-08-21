@@ -2,7 +2,10 @@ import { relative } from "./deps/std/path.ts";
 
 // parseRoute takes an absolute file path and transforms it into
 // a valid route to which requests can be routed
-function parseRoute(absoluteRootDir: string, absolutePath: string): string {
+export function parseRoute(
+  absoluteRootDir: string,
+  absolutePath: string,
+): string {
   let route = "/" + relative(absoluteRootDir, absolutePath);
 
   // TODO: this feels janky, although this should work just fine
@@ -21,5 +24,3 @@ function parseRoute(absoluteRootDir: string, absolutePath: string): string {
 
   return route;
 }
-
-export { parseRoute };

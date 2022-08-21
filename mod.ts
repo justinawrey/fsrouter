@@ -73,7 +73,7 @@ function bootMessage(fileMap: FileMap, rootDir: string) {
 /**
  * A collection of options to be passed in on initialization.
  */
-interface RouterOptions {
+export interface RouterOptions {
   /**
    * Whether or not an information message should be shown on startup.
    * Defaults to true.
@@ -128,7 +128,7 @@ interface RouterOptions {
  * @param opts An optional options object
  * @returns A Promise which resolves to a Handler
  */
-async function fsRouter(
+export async function fsRouter(
   rootDir: string,
   opts: RouterOptions = {
     bootMessage: true,
@@ -170,5 +170,3 @@ async function fsRouter(
 
   return handleRoutes(routeMap);
 }
-
-export { fsRouter, type RouterOptions };
