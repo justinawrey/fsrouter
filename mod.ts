@@ -1,4 +1,4 @@
-import { bold, cyan } from "./private/deps/std/fmt.ts";
+import { bold, cyan, red } from "./private/deps/std/fmt.ts";
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { errors, type Handler, isHttpError } from "./private/deps/std/http.ts";
 import { resolve } from "./private/deps/std/path.ts";
@@ -39,8 +39,22 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
   };
 }
 
+// Logs a warning message saying that you
+// may have accidentally started a server with no routes
+function warningMessage(rootDir: string) {
+  console.log("");
+  console.log(
+    red(
+      `${bold("Warning:")} directory ${
+        bold(rootDir)
+      } is empty - 0 routes are being served`,
+    ),
+  );
+  console.log("");
+}
+
 // Logs a boot message containing information about
-// which files map to which routes.
+// which files map to which routes
 function bootMessage(fileMap: FileMap, rootDir: string) {
   console.log("");
   console.log(
@@ -148,8 +162,9 @@ async function fsRouter(
     fileMap.set(route, filePath.path);
   }
 
-  // If RouterOptions.bootMessage = true, show startup stats
-  if (opts.bootMessage) {
+  if (fileMap.size === 0) {
+    warningMessage(rootDir);
+  } else if (opts.bootMessage) {
     bootMessage(fileMap, rootDir);
   }
 
