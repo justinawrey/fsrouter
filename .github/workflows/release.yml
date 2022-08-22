@@ -6,6 +6,38 @@ on:
       - main
 
 jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      - name: Run formatter
+        run: deno fmt --check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      - name: Run linter
+        run: deno task lint
+
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -23,7 +55,7 @@ jobs:
         run: deno task test
 
   release:
-    needs: test
+    needs: [format, lint, test]
     name: Release
     runs-on: ubuntu-latest
 
