@@ -1,4 +1,4 @@
-# `fsrouter` | ![format](https://github.com/justinawrey/fsrouter/actions/workflows/format.yml/badge.svg) ![lint](https://github.com/justinawrey/fsrouter/actions/workflows/lint.yml/badge.svg) ![test](https://github.com/justinawrey/fsrouter/actions/workflows/test.yml/badge.svg) ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release.yml/badge.svg)
+# `fsrouter` | [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https://deno.land/x/fsrouter/mod.ts) ![format](https://github.com/justinawrey/fsrouter/actions/workflows/format.yml/badge.svg) ![lint](https://github.com/justinawrey/fsrouter/actions/workflows/lint.yml/badge.svg) ![test](https://github.com/justinawrey/fsrouter/actions/workflows/test.yml/badge.svg) ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release.yml/badge.svg)
 
 A file system based router for [Deno](https://deno.land).
 
