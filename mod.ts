@@ -1,8 +1,8 @@
-import { bold, cyan, red } from "./private/deps/std/fmt.ts";
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { errors, type Handler, isHttpError } from "./private/deps/std/http.ts";
 import { resolve, toFileUrl } from "./private/deps/std/path.ts";
 import { parseRoute } from "./private/parse.ts";
+import { bootMessage, warningMessage } from "./private/console.ts";
 
 type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 
@@ -10,7 +10,7 @@ type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 type RouteMap = Map<string, Handler>;
 
 // A map of route string to their respective file names
-type FileMap = Map<string, string>;
+export type FileMap = Map<string, string>;
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
@@ -38,37 +38,6 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
     const handler = routeMap.get(route) as MapValueType<RouteMap>;
     return handler(req, connInfo);
   };
-}
-
-// Logs a warning message saying that you
-// may have accidentally started a server with no routes
-function warningMessage(rootDir: string) {
-  console.log("");
-  console.log(
-    red(
-      `${bold("Warning:")} directory ${
-        bold(rootDir)
-      } is empty - 0 routes are being served`,
-    ),
-  );
-  console.log("");
-}
-
-// Logs a boot message containing information about
-// which files map to which routes
-function bootMessage(fileMap: FileMap, rootDir: string) {
-  console.log("");
-  console.log(
-    bold(
-      `Serving ${cyan(fileMap.size.toString())} ${
-        fileMap.size === 1 ? "route" : "routes"
-      } from directory ${cyan(rootDir)}:\n`,
-    ),
-  );
-  fileMap.forEach((file, route) =>
-    console.log(`- ${bold(cyan(file))} -> ${bold(cyan(route))}`)
-  );
-  console.log("");
 }
 
 /**
