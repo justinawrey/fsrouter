@@ -106,8 +106,16 @@ detect new file additions as well:
 deno run --allow-read --allow-net --watch=pages my-app/mod.ts
 ```
 
----
+## Permissions
 
-**Note**: since `fsrouter` requires access to both the network and the file
-system, `--allow-read` and `--allow-net` are required arguments when executing
-modules.
+Since `fsrouter` requires access to both the network and the file system,
+`--allow-read` and `--allow-net` are required arguments when executing modules.
+
+## Deno Deploy
+
+This module uses dynamic imports to resolve file names to their respective
+routes. As Deno Deploy
+[does not support dynamic imports](https://github.com/denoland/deploy_feedback/issues/1),
+this module is not Deno Deploy compatible. There are workarounds available that
+involve generating static manifests using a sort of build-step -- in the future,
+supporting this type of workflow will be considered.
