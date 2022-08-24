@@ -145,7 +145,7 @@ export async function fsRouter(
     // Only allow typescript files because they are the only files which
     // will have actual handler definitions.
     // TODO: maybe act as a static file server for all other files?
-    exts: [".ts", ".js"],
+    exts: [".ts", ".js", ".jsx", ".tsx"],
   };
 
   for await (const filePath of walk(rootDir, walkOpts)) {

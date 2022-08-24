@@ -1,4 +1,17 @@
-import { relative } from "./deps/std/path.ts";
+import { extname, relative } from "./deps/std/path.ts";
+
+function removeExtension(path: string) {
+  const ext = extname(path);
+  return path.slice(0, -ext.length);
+}
+
+function removeIndex(path: string) {
+  if (!path.endsWith("/index")) {
+    return path;
+  }
+
+  return path.slice(0, -6);
+}
 
 // parseRoute takes an absolute file path and transforms it into
 // a valid route to which requests can be routed
@@ -8,21 +21,9 @@ export function parseRoute(
 ): string {
   let route = "/" + relative(absoluteRootDir, absolutePath);
 
-  // TODO: this feels janky, although this should work just fine
-  if (route.endsWith(".ts")) {
-    route = route.slice(0, -3);
-  } else if (route.endsWith(".js")) {
-    route = route.slice(0, -3);
-  }
+  // Do some processing on the file path to turn it into a valid route
+  route = removeExtension(route);
+  route = removeIndex(route);
 
-  if (route.endsWith("index")) {
-    route = route.slice(0, -5);
-  }
-
-  // Strip trailing '/' from folders acting as index.ts
-  if (route !== "/" && route.endsWith("/")) {
-    route = route.slice(0, -1);
-  }
-
-  return route;
+  return route || "/";
 }
