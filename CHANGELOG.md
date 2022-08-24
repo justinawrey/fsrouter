@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/justinawrey/fsrouter/compare/2.4.2...2.4.3) (2022-08-22)
+
+
+### Bug Fixes
+
+* show correct response text at example route /contact ([b8438c9](https://github.com/justinawrey/fsrouter/commit/b8438c95018c64771da4b1d8f44ca31c82a64697))
+
 ## [2.4.2](https://github.com/justinawrey/fsrouter/compare/2.4.1...2.4.2) (2022-08-21)
 
 
