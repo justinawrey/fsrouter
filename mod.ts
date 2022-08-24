@@ -3,7 +3,8 @@ import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { errors, type Handler, isHttpError } from "./private/deps/std/http.ts";
 import { resolve, toFileUrl } from "./private/deps/std/path.ts";
 import { parseRoute } from "./private/parse.ts";
-import type { MapValueType } from "./private/util.ts";
+
+type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 
 // A map of route strings to their respective handler functions
 type RouteMap = Map<string, Handler>;
