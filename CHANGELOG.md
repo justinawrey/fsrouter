@@ -1,3 +1,10 @@
+## [2.5.0](https://github.com/justinawrey/fsrouter/compare/2.4.3...2.5.0) (2022-08-24)
+
+
+### Features
+
+* add .jsx and .tsx support ([0f1fb31](https://github.com/justinawrey/fsrouter/commit/0f1fb318cdaf9b1062f7736315f750f1ae17d12d))
+
 ## [2.4.3](https://github.com/justinawrey/fsrouter/compare/2.4.2...2.4.3) (2022-08-22)
 
 
