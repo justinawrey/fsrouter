@@ -1,8 +1,9 @@
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
-import { errors, type Handler, isHttpError } from "./private/deps/std/http.ts";
+import { type Handler } from "./private/deps/std/http.ts";
 import { resolve, toFileUrl } from "./private/deps/std/path.ts";
 import { parseRoute } from "./private/parse.ts";
 import { bootMessage, warningMessage } from "./private/console.ts";
+import { notFound } from "./private/response.ts";
 
 type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 
@@ -27,25 +28,16 @@ export type InfoMap = Map<string, RouteInfo>;
 function handleRoutes(infoMap: InfoMap): Handler {
   return (req, connInfo) => {
     const route = new URL(req.url).pathname;
+    const info = infoMap.get(route);
+
+    // Non-slug route found, serve it
+    if (info) {
+      return info.handler(req, connInfo);
+    }
 
     // Respond with a 404 Not Found if asking for a route
     // that does not exist
-    if (!infoMap.has(route)) {
-      try {
-        throw new errors.NotFound();
-      } catch (e) {
-        if (isHttpError(e)) {
-          return new Response(e.message, { status: e.status });
-        } else {
-          throw e;
-        }
-      }
-    }
-
-    // Unfortunately we still have to assert the Handler type here, even though
-    // we're now sure that the route indeed does exist in the route map
-    const { handler } = infoMap.get(route) as MapValueType<InfoMap>;
-    return handler(req, connInfo);
+    return notFound();
   };
 }
 
