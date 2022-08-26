@@ -6,22 +6,24 @@ import { bootMessage, warningMessage } from "./private/console.ts";
 
 type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 
-// A map of route strings to their respective handler functions
-type RouteMap = Map<string, Handler>;
+interface RouteInfo {
+  handler: Handler;
+  file: string;
+}
 
-// A map of route string to their respective file names
-export type FileMap = Map<string, string>;
+// A map of route strings to their respective handler functions
+export type InfoMap = Map<string, RouteInfo>;
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
+function handleRoutes(infoMap: InfoMap): Handler {
   return (req, connInfo) => {
     const route = new URL(req.url).pathname;
 
     // Respond with a 404 Not Found if asking for a route
     // that does not exist
-    if (!routeMap.has(route)) {
+    if (!infoMap.has(route)) {
       try {
         throw new errors.NotFound();
       } catch (e) {
@@ -35,7 +37,7 @@ function handleRoutes(routeMap: RouteMap): MapValueType<RouteMap> {
 
     // Unfortunately we still have to assert the Handler type here, even though
     // we're now sure that the route indeed does exist in the route map
-    const handler = routeMap.get(route) as MapValueType<RouteMap>;
+    const { handler } = infoMap.get(route) as MapValueType<InfoMap>;
     return handler(req, connInfo);
   };
 }
@@ -104,9 +106,6 @@ export async function fsRouter(
     bootMessage: true,
   },
 ): Promise<Handler> {
-  const routeMap: RouteMap = new Map();
-  const fileMap: FileMap = new Map();
-
   const walkOpts: WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
     // about files which have declared handlers in them.
@@ -118,6 +117,7 @@ export async function fsRouter(
     exts: [".ts", ".js", ".jsx", ".tsx"],
   };
 
+  const infoMap: InfoMap = new Map();
   for await (const filePath of walk(rootDir, walkOpts)) {
     // Derive the correct route from raw file paths,
     // e.g. /example/blog/post.ts -> /blog/post (where example is the root directory)
@@ -128,15 +128,16 @@ export async function fsRouter(
     // Load up all of the files that should be handling routes and
     // save the information in respective maps
     const handler = (await import(absolutePath)).default;
-    routeMap.set(route, handler);
-    fileMap.set(route, filePath.path);
+    const routeInfo = { handler, file: filePath.path };
+
+    infoMap.set(route, routeInfo);
   }
 
-  if (fileMap.size === 0) {
+  if (infoMap.size === 0) {
     warningMessage(rootDir);
   } else if (opts.bootMessage) {
-    bootMessage(fileMap, rootDir);
+    bootMessage(infoMap, rootDir);
   }
 
-  return handleRoutes(routeMap);
+  return handleRoutes(infoMap);
 }

@@ -1,5 +1,5 @@
 import { bold, cyan, red } from "./deps/std/fmt.ts";
-import { type FileMap } from "../mod.ts";
+import { type InfoMap } from "../mod.ts";
 
 // Logs a warning message saying that you
 // may have accidentally started a server with no routes
@@ -17,17 +17,17 @@ export function warningMessage(rootDir: string) {
 
 // Logs a boot message containing information about
 // which files map to which routes
-export function bootMessage(fileMap: FileMap, rootDir: string) {
+export function bootMessage(infoMap: InfoMap, rootDir: string) {
   console.log("");
   console.log(
     bold(
-      `Serving ${cyan(fileMap.size.toString())} ${
-        fileMap.size === 1 ? "route" : "routes"
+      `Serving ${cyan(infoMap.size.toString())} ${
+        infoMap.size === 1 ? "route" : "routes"
       } from directory ${cyan(rootDir)}:\n`,
     ),
   );
-  fileMap.forEach((file, route) =>
-    console.log(`- ${bold(cyan(file))} -> ${bold(cyan(route))}`)
+  infoMap.forEach((info, route) =>
+    console.log(`- ${bold(cyan(info.file))} -> ${bold(cyan(route))}`)
   );
   console.log("");
 }
