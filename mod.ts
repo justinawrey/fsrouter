@@ -6,9 +6,16 @@ import { bootMessage, warningMessage } from "./private/console.ts";
 
 type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
 
+// Information associated with each route
 interface RouteInfo {
+  // The Handler responsible for responding to requests
   handler: Handler;
+
+  // The raw filename associated with the route
   file: string;
+
+  // The parsed route with file extension and /index stripped away
+  route: string;
 }
 
 // A map of route strings to their respective handler functions
@@ -127,8 +134,8 @@ export async function fsRouter(
 
     // Load up all of the files that should be handling routes and
     // save the information in respective maps
-    const handler = (await import(absolutePath)).default;
-    const routeInfo = { handler, file: filePath.path };
+    const handler = (await import(absolutePath)).default as Handler;
+    const routeInfo = { handler, route, file: filePath.path };
 
     infoMap.set(route, routeInfo);
   }

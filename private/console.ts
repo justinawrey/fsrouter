@@ -26,8 +26,8 @@ export function bootMessage(infoMap: InfoMap, rootDir: string) {
       } from directory ${cyan(rootDir)}:\n`,
     ),
   );
-  infoMap.forEach((info, route) =>
-    console.log(`- ${bold(cyan(info.file))} -> ${bold(cyan(route))}`)
+  infoMap.forEach(({ file, route }) =>
+    console.log(`- ${bold(cyan(file))} -> ${bold(cyan(route))}`)
   );
   console.log("");
 }
