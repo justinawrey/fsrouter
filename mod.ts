@@ -2,7 +2,7 @@ import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { type Handler } from "./private/deps/std/http.ts";
 import { resolve, toFileUrl } from "./private/deps/std/path.ts";
 import { parseRoute } from "./private/parse.ts";
-import { bootMessage, warningMessage } from "./private/console.ts";
+import { bootMessage, errorMessage } from "./private/console.ts";
 import { notFound } from "./private/response.ts";
 
 type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
@@ -133,8 +133,11 @@ export async function fsRouter(
   }
 
   if (infoMap.size === 0) {
-    warningMessage(rootDir);
-  } else if (opts.bootMessage) {
+    errorMessage(rootDir);
+    Deno.exit(0);
+  }
+
+  if (opts.bootMessage) {
     bootMessage(infoMap, rootDir);
   }
 

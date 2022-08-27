@@ -3,7 +3,7 @@ import { type InfoMap } from "../mod.ts";
 
 // Logs a warning message saying that you
 // may have accidentally started a server with no routes
-export function warningMessage(rootDir: string) {
+export function errorMessage(rootDir: string) {
   console.log("");
   console.log(
     red(
