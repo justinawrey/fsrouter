@@ -1,38 +1,25 @@
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { type Handler } from "./private/deps/std/http.ts";
-import { resolve, toFileUrl } from "./private/deps/std/path.ts";
-import { parseRoute } from "./private/parse.ts";
-import { bootMessage, errorMessage } from "./private/console.ts";
+import { bootMessage, errorMessage } from "./private/log.ts";
 import { notFound } from "./private/response.ts";
-
-type MapValueType<A> = A extends Map<unknown, infer V> ? V : never;
-
-// Information associated with each route
-interface RouteInfo {
-  // The Handler responsible for responding to requests
-  handler: Handler;
-
-  // The raw filename associated with the route
-  file: string;
-
-  // The parsed route with file extension and /index stripped away
-  route: string;
-}
-
-// A map of route strings to their respective handler functions
-export type InfoMap = Map<string, RouteInfo>;
+import { Route } from "./private/route.ts";
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(infoMap: InfoMap): Handler {
+function handleRoutes(routes: Route[]): Handler {
+  // Make a map outta these routes for easier lookup.
+  const routeMap = new Map<string, Route>(
+    routes.map((route) => [route.parsed, route]),
+  );
+
   return (req, connInfo) => {
-    const route = new URL(req.url).pathname;
-    const info = infoMap.get(route);
+    const urlPath = new URL(req.url).pathname;
+    const route = routeMap.get(urlPath);
 
     // Non-slug route found, serve it
-    if (info) {
-      return info.handler(req, connInfo);
+    if (route) {
+      return route.handler(req, connInfo);
     }
 
     // Respond with a 404 Not Found if asking for a route
@@ -116,30 +103,19 @@ export async function fsRouter(
     exts: [".ts", ".js", ".jsx", ".tsx"],
   };
 
-  const infoMap: InfoMap = new Map();
+  const routes: Route[] = [];
   for await (const filePath of walk(rootDir, walkOpts)) {
-    // Derive the correct route from raw file paths,
-    // e.g. /example/blog/post.ts -> /blog/post (where example is the root directory)
-    const absolutePath = toFileUrl(resolve(Deno.cwd(), filePath.path)).href;
-    const absoluteRootDir = toFileUrl(resolve(Deno.cwd(), rootDir)).href;
-    const route = parseRoute(absoluteRootDir, absolutePath);
-
-    // Load up all of the files that should be handling routes and
-    // save the information in respective maps
-    const handler = (await import(absolutePath)).default as Handler;
-    const routeInfo = { handler, route, file: filePath.path };
-
-    infoMap.set(route, routeInfo);
+    routes.push(await Route.create(filePath.path, rootDir));
   }
 
-  if (infoMap.size === 0) {
+  if (routes.length === 0) {
     errorMessage(rootDir);
     Deno.exit(0);
   }
 
   if (opts.bootMessage) {
-    bootMessage(infoMap, rootDir);
+    bootMessage(routes, rootDir);
   }
 
-  return handleRoutes(infoMap);
+  return handleRoutes(routes);
 }
