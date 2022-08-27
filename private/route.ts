@@ -32,10 +32,10 @@ function parseRoute(
 
 export class Route {
   constructor(
-    // // The parsed route with file extension and /index stripped away
-    public parsed: string,
     // // The original file name for this route
     public file: string,
+    // // The parsed route with file extension and /index stripped away
+    public parsed: string,
     // // The Handler responsible for responding to requests
     public handler: Handler,
   ) {}
@@ -50,8 +50,8 @@ export class Route {
     const absRootDir = toFileUrl(resolve(Deno.cwd(), rootDir)).href;
 
     return new this(
-      parseRoute(absRootDir, absPath),
       filePath,
+      parseRoute(absRootDir, absPath),
       (await import(absPath)).default as Handler,
     );
   }
