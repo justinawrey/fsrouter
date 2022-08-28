@@ -32,12 +32,14 @@ function parseRoute(
 
 export class Route {
   constructor(
-    // // The original file name for this route
+    // The original file name for this route
     public file: string,
-    // // The parsed route with file extension and /index stripped away
+    // The parsed route with file extension and /index stripped away
     public parsed: string,
-    // // The Handler responsible for responding to requests
+    // The Handler responsible for responding to requests
     public handler: Handler,
+    // Slugs in the filename, with the '[' and ']' characters still included
+    public slugs: string[] = [],
   ) {}
 
   static async create(
@@ -54,5 +56,9 @@ export class Route {
       parseRoute(absRootDir, absPath),
       (await import(absPath)).default as Handler,
     );
+  }
+
+  get hasSlugs() {
+    return this.slugs.length > 0;
   }
 }

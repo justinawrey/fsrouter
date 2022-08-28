@@ -8,18 +8,22 @@ import { Route } from "./private/route.ts";
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
 function handleRoutes(routes: Route[]): Handler {
-  // Make a map outta these routes for easier lookup.
-  const routeMap = new Map<string, Route>(
-    routes.map((route) => [route.parsed, route]),
+  // Split routes into ones that are exact (don't have slugs) and ones that aren't
+  const exactRoutes = routes.filter((route) => !route.hasSlugs);
+  const _slugRoutes = routes.filter((route) => route.hasSlugs);
+
+  // Make a map out of the exact routes for easier lookup.
+  const exactRouteMap = new Map<string, Route>(
+    exactRoutes.map((route) => [route.parsed, route]),
   );
 
   return (req, connInfo) => {
     const urlPath = new URL(req.url).pathname;
-    const route = routeMap.get(urlPath);
+    const exactRoute = exactRouteMap.get(urlPath);
 
-    // Non-slug route found, serve it
-    if (route) {
-      return route.handler(req, connInfo);
+    // Exact route (no slugs) found, serve it
+    if (exactRoute) {
+      return exactRoute.handler(req, connInfo);
     }
 
     // Respond with a 404 Not Found if asking for a route
