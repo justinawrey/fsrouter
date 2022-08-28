@@ -10,7 +10,7 @@ import { Route } from "./private/route.ts";
 function handleRoutes(routes: Route[]): Handler {
   // Split routes into ones that are exact (don't have slugs) and ones that aren't
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
-  const _slugRoutes = routes.filter((route) => route.hasSlugs);
+  const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
 
   // Make a map out of the exact routes for easier lookup.
   const exactRouteMap = new Map<string, Route>(
@@ -23,7 +23,14 @@ function handleRoutes(routes: Route[]): Handler {
 
     // Exact route (no slugs) found, serve it
     if (exactRoute) {
-      return exactRoute.handler(req, connInfo);
+      return exactRoute.handler(req, {}, connInfo);
+    }
+
+    for (const slugRoute of slugRoutes) {
+      const matches = slugRoute.matches(urlPath);
+      if (matches) {
+        return slugRoute.handler(req, matches, connInfo);
+      }
     }
 
     // Respond with a 404 Not Found if asking for a route
