@@ -1,3 +1,15 @@
+## [2.6.0](https://github.com/justinawrey/fsrouter/compare/2.5.0...2.6.0) (2022-08-29)
+
+
+### Features
+
+* initial slugs support ([4740001](https://github.com/justinawrey/fsrouter/commit/47400019e730e9cf53bce4ef6749c5d4023c8e53))
+
+
+### Bug Fixes
+
+* slug matching bug with preceding and trailing extra path parts ([72553e4](https://github.com/justinawrey/fsrouter/commit/72553e455167dc1ea08c623e4eb4f3b672037ccb))
+
 ## [2.5.0](https://github.com/justinawrey/fsrouter/compare/2.4.3...2.5.0) (2022-08-24)
 
 
