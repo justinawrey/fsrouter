@@ -52,11 +52,12 @@ export interface RouterOptions {
 }
 
 /**
- * fsRouter creates a Handler which handles requests
+ * fsRouter creates a standard library Handler which handles requests
  * according to the shape of the filesystem at the given rootDir.
- * Each file within rootDir must provide a Handler as its default
+ * Each file within rootDir must provide a FsHandler as its default
  * export, which will be used to execute requests if the requested
  * route matches the file's position in the filesystem.
+ * See docs on FsHandler.
  *
  * Given a project with the following folder structure:
  *
@@ -71,7 +72,7 @@ export interface RouterOptions {
  * ├─ mod.ts
  * ```
  *
- * Each "route file" must export a Handler as its default export:
+ * Each "route file" must export a FsHandler as its default export:
  *
  * ```typescript
  * // my-app/pages/blog/post.ts
