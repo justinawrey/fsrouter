@@ -1,5 +1,6 @@
 export {
   extname,
+  fromFileUrl,
   relative,
   resolve,
   toFileUrl,

@@ -1,3 +1,3 @@
-export default (_req: Request) => {
-  return new Response("Hello from: /blog/[id]");
+export default (_req: Request, query: Record<string, string>) => {
+  return new Response(`/blog/${query.id}`);
 };

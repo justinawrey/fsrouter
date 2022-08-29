@@ -1,11 +1,9 @@
 {
   "tasks": {
-    // note: must provide --cwd to run this from _scripts dir:
-    // deno task --cwd _scripts example
-    "example": "deno run --allow-read --allow-net --watch=pages example.ts",
+    "example": "deno run --allow-read --allow-net --watch=_scripts/pages _scripts/example.ts",
     "format": "deno fmt",
     "lint": "deno lint",
-    "test": "deno test _test"
+    "test": "deno test --allow-read --allow-net _test"
   },
   "fmt": {
     "files": {
