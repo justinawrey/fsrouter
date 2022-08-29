@@ -4,7 +4,7 @@
     "format": "deno fmt",
     "lint": "deno lint",
     "test": "deno test --allow-read --allow-net --watch _test",
-    "test-no-watch": "deno test --allow-read --allow-net _test",
+    "test-no-watch": "deno test --allow-read --allow-net _test"
   },
   "fmt": {
     "files": {
