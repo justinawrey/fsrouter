@@ -12,7 +12,7 @@ function handleRoutes(routes: Route[]): Handler {
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
 
-  // Make a map out of the exact routes for easier lookup.
+  // Make a map out of the exact routes for easier lookup
   const exactRouteMap = new Map<string, Route>(
     exactRoutes.map((route) => [route.parsed, route]),
   );
@@ -26,6 +26,7 @@ function handleRoutes(routes: Route[]): Handler {
       return exactRoute.handler(req, {}, connInfo);
     }
 
+    // Otherwise, try matching slug routes
     for (const slugRoute of slugRoutes) {
       const matches = slugRoute.matches(urlPath);
       if (matches) {
