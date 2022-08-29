@@ -42,3 +42,7 @@ Deno.test("Handlers with slugs work", async () => {
 Deno.test("Handlers with nested slugs work", async () => {
   assertEquals(await makeRequest("/blog/123"), "/blog/123");
 });
+
+Deno.test("Responds with 404 when route not found", async () => {
+  assertEquals(await makeRequest("/this/is/not/a/route"), "Not Found");
+});

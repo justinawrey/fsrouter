@@ -106,8 +106,9 @@ export class Route {
 
   get regEx(): RegExp {
     return new RegExp(
-      "\\/" +
-        this.parts.map((part) => isSlug(part) ? "(\\w+)" : part).join("\\/"),
+      "^\\/" +
+        this.parts.map((part) => isSlug(part) ? "(\\w+)" : part).join("\\/") +
+        "$",
       "g",
     );
   }
