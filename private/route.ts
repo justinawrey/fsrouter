@@ -1,6 +1,6 @@
-import { type ConnInfo } from "./deps/std/http.ts";
 import { resolve, toFileUrl } from "./deps/std/path.ts";
 import { extname, relative } from "./deps/std/path.ts";
+import { type FsHandler } from "../handler.ts";
 
 function removeExtension(path: string): string {
   const ext = extname(path);
@@ -33,14 +33,6 @@ function parseRoute(
 
   return route || "/";
 }
-
-export type Query = Readonly<Record<string, string>>;
-
-export type FsHandler = (
-  request: Request,
-  query: Query,
-  connInfo: ConnInfo,
-) => Response | Promise<Response>;
 
 export class Route {
   constructor(
