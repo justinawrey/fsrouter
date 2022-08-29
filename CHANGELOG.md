@@ -1,3 +1,10 @@
+## [2.8.0](https://github.com/justinawrey/fsrouter/compare/2.7.0...2.8.0) (2022-08-29)
+
+
+### Features
+
+* update deno.land/x docs ([7e1fd93](https://github.com/justinawrey/fsrouter/commit/7e1fd93b82043efff353ac6f8d669a377b82a222))
+
 ## [2.7.0](https://github.com/justinawrey/fsrouter/compare/2.6.0...2.7.0) (2022-08-29)
 
 
