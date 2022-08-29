@@ -1,8 +1,9 @@
 import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
 import { type Handler } from "./private/deps/std/http.ts";
-import { bootMessage, errorMessage } from "./private/log.ts";
+import { bootMessage, errorMessage } from "./private/message.ts";
 import { notFound } from "./private/response.ts";
 import { Route } from "./private/route.ts";
+import { setupLogger } from "./private/log.ts";
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
@@ -49,6 +50,12 @@ export interface RouterOptions {
    * Defaults to true.
    */
   bootMessage?: boolean;
+
+  /**
+   * Whether or not to output debug information to console.
+   * Defaults to false.
+   */
+  debug?: boolean;
 }
 
 /**
@@ -101,10 +108,13 @@ export interface RouterOptions {
  */
 export async function fsRouter(
   rootDir: string,
-  opts: RouterOptions = {
-    bootMessage: true,
-  },
+  {
+    bootMessage: _bootMessage = true,
+    debug = false,
+  }: RouterOptions = {},
 ): Promise<Handler> {
+  setupLogger(debug);
+
   const walkOpts: WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
     // about files which have declared handlers in them.
@@ -126,7 +136,7 @@ export async function fsRouter(
     Deno.exit(0);
   }
 
-  if (opts.bootMessage) {
+  if (_bootMessage) {
     bootMessage(routes, rootDir);
   }
 
