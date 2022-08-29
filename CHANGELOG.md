@@ -1,3 +1,10 @@
+## [2.7.0](https://github.com/justinawrey/fsrouter/compare/2.6.0...2.7.0) (2022-08-29)
+
+
+### Features
+
+* use relative paths for boot message ([92af614](https://github.com/justinawrey/fsrouter/commit/92af61442d6b99caba02f5eb34f53325cf4764e9))
+
 ## [2.6.0](https://github.com/justinawrey/fsrouter/compare/2.5.0...2.6.0) (2022-08-29)
 
 
