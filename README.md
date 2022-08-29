@@ -18,8 +18,8 @@ my-app/
 ```
 
 Each "route file" must export a
-[Handler](https://deno.land/std@0.152.0/http/server.ts?s=Handler) as its default
-export:
+[FsHandler](https://deno.land/x/fsrouter@2.8.0/handler.ts?s=FsHandler) as its
+default export:
 
 ```typescript
 // my-app/pages/blog/post.ts
