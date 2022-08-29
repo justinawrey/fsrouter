@@ -1,4 +1,5 @@
 import { bold, cyan, red } from "./deps/std/fmt.ts";
+import { relative } from "./deps/std/path.ts";
 import { type Route } from "./route.ts";
 
 // Logs a warning message saying that you
@@ -18,16 +19,18 @@ export function errorMessage(rootDir: string) {
 // Logs a boot message containing information about
 // which files map to which routes
 export function bootMessage(routes: Route[], rootDir: string) {
+  const relativeRootDir = relative(Deno.cwd(), rootDir);
+
   console.log("");
   console.log(
     bold(
       `Serving ${cyan(routes.length.toString())} ${
         routes.length === 1 ? "route" : "routes"
-      } from directory ${cyan(rootDir)}:\n`,
+      } from directory ${cyan(relativeRootDir)}:\n`,
     ),
   );
-  for (const { file, parsed } of routes) {
-    console.log(`- ${bold(cyan(file))} -> ${bold(cyan(parsed))}`);
+  for (const { relativePath, parsed } of routes) {
+    console.log(`- ${bold(cyan(relativePath))} -> ${bold(cyan(parsed))}`);
   }
   console.log("");
 }

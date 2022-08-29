@@ -77,6 +77,10 @@ export class Route {
     return routes;
   }
 
+  get relativePath(): string {
+    return relative(Deno.cwd(), this.file);
+  }
+
   // The parsed route, e.g. with file extension and trailing '/index' stripped away
   get parsed(): string {
     return parseRoute(this.absRootDir, this.absPath);
