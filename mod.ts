@@ -7,6 +7,9 @@ import { notFound } from "./private/response.ts";
 import { Route } from "./private/route.ts";
 import { setupLogger } from "./private/log.ts";
 
+// Re-export
+export * from "./handler.ts";
+
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
