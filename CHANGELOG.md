@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/justinawrey/fsrouter/compare/2.9.0...2.9.1) (2022-08-30)
+
+
+### Bug Fixes
+
+* re-exports everything to be accessible from mod.ts ([fed3eb7](https://github.com/justinawrey/fsrouter/commit/fed3eb7fa6892f8233d07c46aff2576b56c47fdd))
+
 ## [2.9.0](https://github.com/justinawrey/fsrouter/compare/2.8.0...2.9.0) (2022-08-30)
 
 
