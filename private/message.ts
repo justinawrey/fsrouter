@@ -1,5 +1,4 @@
-import { bold, cyan, red } from "./deps/std/fmt.ts";
-import { relative } from "./deps/std/path.ts";
+import { colors, path } from "./deps.ts";
 import { type Route } from "./route.ts";
 
 // Logs a warning message saying that you
@@ -7,9 +6,9 @@ import { type Route } from "./route.ts";
 export function errorMessage(rootDir: string) {
   console.log("");
   console.log(
-    red(
-      `${bold("Warning:")} directory ${
-        bold(rootDir)
+    colors.red(
+      `${colors.bold("Warning:")} directory ${
+        colors.bold(rootDir)
       } is empty - 0 routes are being served`,
     ),
   );
@@ -19,18 +18,22 @@ export function errorMessage(rootDir: string) {
 // Logs a boot message containing information about
 // which files map to which routes
 export function bootMessage(routes: Route[], rootDir: string) {
-  const relativeRootDir = relative(Deno.cwd(), rootDir);
+  const relativeRootDir = path.relative(Deno.cwd(), rootDir);
 
   console.log("");
   console.log(
-    bold(
-      `Serving ${cyan(routes.length.toString())} ${
+    colors.bold(
+      `Serving ${colors.cyan(routes.length.toString())} ${
         routes.length === 1 ? "route" : "routes"
-      } from directory ${cyan(relativeRootDir)}:\n`,
+      } from directory ${colors.cyan(relativeRootDir)}:\n`,
     ),
   );
   for (const { relativePath, parsed } of routes) {
-    console.log(`- ${bold(cyan(relativePath))} -> ${bold(cyan(parsed))}`);
+    console.log(
+      `- ${colors.bold(colors.cyan(relativePath))} -> ${
+        colors.bold(colors.cyan(parsed))
+      }`,
+    );
   }
   console.log("");
 }

@@ -1,6 +1,8 @@
-import { walk, type WalkOptions } from "./private/deps/std/fs.ts";
-import { type Handler } from "./private/deps/std/http.ts";
-import { bootMessage, errorMessage } from "./private/message.ts";
+import { colors, fs, http, log } from "./private/deps.ts";
+import {
+  bootMessage as _bootMessage,
+  errorMessage,
+} from "./private/message.ts";
 import { notFound } from "./private/response.ts";
 import { Route } from "./private/route.ts";
 import { setupLogger } from "./private/log.ts";
@@ -8,7 +10,7 @@ import { setupLogger } from "./private/log.ts";
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(routes: Route[]): Handler {
+function handleRoutes(routes: Route[]): http.Handler {
   // Split routes into ones that are exact (don't have slugs) and ones that aren't
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
@@ -109,13 +111,22 @@ export interface RouterOptions {
 export async function fsRouter(
   rootDir: string,
   {
-    bootMessage: _bootMessage = true,
     debug = false,
+    bootMessage = true,
   }: RouterOptions = {},
-): Promise<Handler> {
-  setupLogger(debug);
+): Promise<http.Handler> {
+  await setupLogger(debug);
 
-  const walkOpts: WalkOptions = {
+  log.debug(`initialized with root dir: ${colors.bold(rootDir)}`);
+  log.debug(
+    `initialized with options: ${
+      colors.bold(
+        JSON.stringify({ debug, bootMessage }, null, 2),
+      )
+    }`,
+  );
+
+  const walkOpts: fs.WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
     // about files which have declared handlers in them.
     includeDirs: false,
@@ -127,7 +138,7 @@ export async function fsRouter(
   };
 
   const routes: Route[] = [];
-  for await (const filePath of walk(rootDir, walkOpts)) {
+  for await (const filePath of fs.walk(rootDir, walkOpts)) {
     routes.push(await Route.create(filePath.path, rootDir));
   }
 
@@ -136,8 +147,8 @@ export async function fsRouter(
     Deno.exit(0);
   }
 
-  if (_bootMessage) {
-    bootMessage(routes, rootDir);
+  if (bootMessage) {
+    _bootMessage(routes, rootDir);
   }
 
   return handleRoutes(routes);

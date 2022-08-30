@@ -1,9 +1,9 @@
 import { assertEquals } from "https://deno.land/std@0.152.0/testing/asserts.ts";
-import { fromFileUrl } from "../private/deps/std/path.ts";
+import { path } from "../private/deps.ts";
 import { fsRouter } from "../mod.ts";
 
 const handler = await fsRouter(
-  fromFileUrl(import.meta.resolve("../_scripts/pages")),
+  path.fromFileUrl(import.meta.resolve("../_scripts/pages")),
   { bootMessage: false },
 );
 

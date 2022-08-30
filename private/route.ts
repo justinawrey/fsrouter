@@ -1,18 +1,17 @@
-import { resolve, toFileUrl } from "./deps/std/path.ts";
-import { extname, relative } from "./deps/std/path.ts";
+import { path } from "./deps.ts";
 import { type FsHandler } from "../handler.ts";
 
-function removeExtension(path: string): string {
-  const ext = extname(path);
-  return path.slice(0, -ext.length);
+function removeExtension(filePath: string): string {
+  const ext = path.extname(filePath);
+  return filePath.slice(0, -ext.length);
 }
 
-function removeIndex(path: string): string {
-  if (!path.endsWith("/index")) {
-    return path;
+function removeIndex(filePath: string): string {
+  if (!filePath.endsWith("/index")) {
+    return filePath;
   }
 
-  return path.slice(0, -6);
+  return filePath.slice(0, -6);
 }
 
 function isSlug(part: string): boolean {
@@ -25,7 +24,7 @@ function parseRoute(
   absoluteRootDir: string,
   absolutePath: string,
 ): string {
-  let route = "/" + relative(absoluteRootDir, absolutePath);
+  let route = "/" + path.relative(absoluteRootDir, absolutePath);
 
   // Do some processing on the file path to turn it into a valid route
   route = removeExtension(route);
@@ -52,8 +51,8 @@ export class Route {
   ): Promise<Route> {
     // Derive the correct route from raw file paths,
     // e.g. /example/blog/post.ts -> /blog/post (where example is the root directory)
-    const absPath = toFileUrl(resolve(Deno.cwd(), filePath)).href;
-    const absRootDir = toFileUrl(resolve(Deno.cwd(), rootDir)).href;
+    const absPath = path.toFileUrl(path.resolve(Deno.cwd(), filePath)).href;
+    const absRootDir = path.toFileUrl(path.resolve(Deno.cwd(), rootDir)).href;
 
     return new this(
       filePath,
@@ -70,7 +69,7 @@ export class Route {
   }
 
   get relativePath(): string {
-    return relative(Deno.cwd(), this.file);
+    return path.relative(Deno.cwd(), this.file);
   }
 
   // The parsed route, e.g. with file extension and trailing '/index' stripped away

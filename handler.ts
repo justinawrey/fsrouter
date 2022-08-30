@@ -1,4 +1,4 @@
-import { type ConnInfo } from "./private/deps/std/http.ts";
+import { http } from "./private/deps.ts";
 
 /**
  * Query is an object of text matched from route wildcards.  See FsHandler example for more details.
@@ -29,5 +29,5 @@ export type Query = Readonly<Record<string, string>>;
 export type FsHandler = (
   request: Request,
   query: Query,
-  connInfo: ConnInfo,
+  connInfo: http.ConnInfo,
 ) => Response | Promise<Response>;

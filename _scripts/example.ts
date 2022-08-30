@@ -1,10 +1,9 @@
-import { serve } from "../private/deps/std/http.ts";
-import { fromFileUrl } from "../private/deps/std/path.ts";
+import { http, path } from "../private/deps.ts";
 import { fsRouter } from "../mod.ts";
 
 if (!import.meta.main) {
   Deno.exit();
 }
 
-const rootDir = fromFileUrl(import.meta.resolve("./pages"));
-serve(await fsRouter(rootDir));
+const rootDir = path.fromFileUrl(import.meta.resolve("./pages"));
+http.serve(await fsRouter(rootDir));

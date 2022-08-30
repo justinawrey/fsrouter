@@ -1,9 +1,11 @@
-import { ConsoleHandler, setup } from "./deps/std/log.ts";
+import { colors, log } from "./deps.ts";
 
-export async function setupLogger(debug: boolean) {
-  await setup({
+export function setupLogger(debug: boolean): Promise<void> {
+  return log.setup({
     handlers: {
-      default: new ConsoleHandler("DEBUG"),
+      default: new log.handlers.ConsoleHandler("DEBUG", {
+        formatter: colors.yellow(`${colors.bold("[{levelName}]")} {msg}`),
+      }),
     },
 
     loggers: {
