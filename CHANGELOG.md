@@ -1,3 +1,10 @@
+## [2.9.0](https://github.com/justinawrey/fsrouter/compare/2.8.0...2.9.0) (2022-08-30)
+
+
+### Features
+
+* adds debug mode ([97e643d](https://github.com/justinawrey/fsrouter/commit/97e643dc0d9f21d2e0f534b441715968f5dad064))
+
 ## [2.8.0](https://github.com/justinawrey/fsrouter/compare/2.7.0...2.8.0) (2022-08-29)
 
 
