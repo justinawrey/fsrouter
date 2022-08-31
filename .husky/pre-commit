@@ -3,4 +3,4 @@
 
 deno task format
 deno task lint
-deno task test-no-watch
+deno task test
