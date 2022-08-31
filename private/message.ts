@@ -21,7 +21,9 @@ export function bootMessage(routes: Route[], rootDir: string): void {
     colors.bold(
       `Serving ${colors.cyan(routes.length.toString())} ${
         routes.length === 1 ? "route" : "routes"
-      } from directory ${colors.cyan(relativeRootDir)}:\n`,
+      } from directory ${
+        colors.cyan(relativeRootDir === "" ? "." : relativeRootDir)
+      }:\n`,
     ),
   );
   for (const { relativePath, parsed } of routes) {
