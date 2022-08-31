@@ -52,7 +52,7 @@ jobs:
           deno-version: vx.x.x
 
       - name: Run tests
-        run: deno task test-no-watch
+        run: deno task test
 
   release:
     needs: [format, lint, test]
