@@ -1,11 +1,12 @@
 import { colors, fs, http, log } from "./private/deps.ts";
 import {
   bootMessage as _bootMessage,
-  errorMessage,
+  errorRootDirEmpty,
 } from "./private/message.ts";
 import { notFound } from "./private/response.ts";
 import { Route } from "./private/route.ts";
 import { setupLogger } from "./private/log.ts";
+import { error } from "./private/message.ts";
 
 // Re-export
 export * from "./handler.ts";
@@ -44,6 +45,36 @@ function handleRoutes(routes: Route[]): http.Handler {
     // that does not exist
     return notFound();
   };
+}
+
+async function discoverRoutes(rootDir: string): Promise<Route[]> {
+  const walkOpts: fs.WalkOptions = {
+    // Exclude directories when walking the filesystem.  We only care
+    // about files which have declared handlers in them.
+    includeDirs: false,
+
+    // Only allow typescript files because they are the only files which
+    // will have actual handler definitions.
+    // TODO: maybe act as a static file server for all other files?
+    exts: [".ts", ".js", ".jsx", ".tsx"],
+  };
+
+  const files: fs.WalkEntry[] = [];
+  try {
+    for await (const filePath of fs.walk(rootDir, walkOpts)) {
+      files.push(filePath);
+    }
+  } catch (_e) {
+    // Deno bug: error should be instance of Deno.errors.NotFound
+    // https://github.com/denoland/deno_std/issues/1310
+    // TODO: isolate the error better when this is fixed
+    error(`directory ${colors.bold(rootDir)} could not be found`);
+    Deno.exit(0);
+  }
+
+  return Promise.all(
+    files.map((file) => Route.create(file.path, rootDir)),
+  );
 }
 
 /**
@@ -120,33 +151,12 @@ export async function fsRouter(
 ): Promise<http.Handler> {
   await setupLogger(debug);
 
-  log.debug(`initialized with root dir: ${colors.bold(rootDir)}`);
-  log.debug(
-    `initialized with options: ${
-      colors.bold(
-        JSON.stringify({ debug, bootMessage }, null, 2),
-      )
-    }`,
-  );
+  log.debug("fsRouter initialized with root dir:", rootDir);
+  log.debug("fsRouter initialized with options:", { debug, bootMessage });
 
-  const walkOpts: fs.WalkOptions = {
-    // Exclude directories when walking the filesystem.  We only care
-    // about files which have declared handlers in them.
-    includeDirs: false,
-
-    // Only allow typescript files because they are the only files which
-    // will have actual handler definitions.
-    // TODO: maybe act as a static file server for all other files?
-    exts: [".ts", ".js", ".jsx", ".tsx"],
-  };
-
-  const routes: Route[] = [];
-  for await (const filePath of fs.walk(rootDir, walkOpts)) {
-    routes.push(await Route.create(filePath.path, rootDir));
-  }
-
+  const routes = await discoverRoutes(rootDir);
   if (routes.length === 0) {
-    errorMessage(rootDir);
+    errorRootDirEmpty(rootDir);
     Deno.exit(0);
   }
 

@@ -3,21 +3,17 @@ import { type Route } from "./route.ts";
 
 // Logs a warning message saying that you
 // may have accidentally started a server with no routes
-export function errorMessage(rootDir: string) {
+export function errorRootDirEmpty(rootDir: string): void {
   console.log("");
-  console.log(
-    colors.red(
-      `${colors.bold("Warning:")} directory ${
-        colors.bold(rootDir)
-      } is empty - 0 routes are being served`,
-    ),
+  error(
+    `directory ${colors.bold(rootDir)} is empty - 0 routes are being served`,
   );
   console.log("");
 }
 
 // Logs a boot message containing information about
 // which files map to which routes
-export function bootMessage(routes: Route[], rootDir: string) {
+export function bootMessage(routes: Route[], rootDir: string): void {
   const relativeRootDir = path.relative(Deno.cwd(), rootDir);
 
   console.log("");
@@ -36,4 +32,8 @@ export function bootMessage(routes: Route[], rootDir: string) {
     );
   }
   console.log("");
+}
+
+export function error(msg: string): void {
+  console.log(colors.red(colors.bold(colors.italic("Error:"))) + " " + msg);
 }

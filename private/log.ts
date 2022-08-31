@@ -4,7 +4,21 @@ export function setupLogger(debug: boolean): Promise<void> {
   return log.setup({
     handlers: {
       default: new log.handlers.ConsoleHandler("DEBUG", {
-        formatter: colors.yellow(`${colors.bold("[{levelName}]")} {msg}`),
+        formatter: ({ levelName, msg, args }) => {
+          let baseLog = `${
+            colors.bold(colors.italic(`[${levelName}]`))
+          } ${msg}`;
+
+          for (const arg of args) {
+            baseLog += " " + colors.bold(
+              typeof arg === "object"
+                ? JSON.stringify(arg, null, 2)
+                : arg as string,
+            );
+          }
+
+          return colors.yellow(baseLog);
+        },
       }),
     },
 
