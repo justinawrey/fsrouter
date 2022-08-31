@@ -1,3 +1,10 @@
+## [2.11.0](https://github.com/justinawrey/fsrouter/compare/2.10.1...2.11.0) (2022-08-31)
+
+
+### Features
+
+* adds --version to cli ([8e0fa88](https://github.com/justinawrey/fsrouter/commit/8e0fa889147ddd4d52e9337e378691b9bc98a573))
+
 ## [2.10.1](https://github.com/justinawrey/fsrouter/compare/2.10.0...2.10.1) (2022-08-31)
 
 
