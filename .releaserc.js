@@ -17,7 +17,8 @@ export default {
       },
     ],
     ["@semantic-release/exec", {
-      publishCmd: `echo 'export const version = "\${nextRelease.version}'" > version.ts`,
+      publishCmd:
+        `echo 'export const version = "\${nextRelease.version}'" > version.ts`,
     }],
   ],
   tagFormat: "${version}",
