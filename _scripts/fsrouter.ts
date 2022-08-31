@@ -41,5 +41,4 @@ const rootDir = rawArgs[0].toString();
 const routerOptions: Omit<typeof args, "_"> = { ...args };
 delete routerOptions._;
 
-// TODO: if rootDir can't be found, this should gracefully die
 http.serve(await fsRouter(rootDir, routerOptions as RouterOptions));
