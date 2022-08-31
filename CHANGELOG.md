@@ -1,3 +1,10 @@
+## [2.10.0](https://github.com/justinawrey/fsrouter/compare/2.9.1...2.10.0) (2022-08-31)
+
+
+### Features
+
+* rudimentary cli ([2d54dfa](https://github.com/justinawrey/fsrouter/commit/2d54dfa752f427e7d04a0bd405729d154dee2237))
+
 ## [2.9.1](https://github.com/justinawrey/fsrouter/compare/2.9.0...2.9.1) (2022-08-30)
 
 
