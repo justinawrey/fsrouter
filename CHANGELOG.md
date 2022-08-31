@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/justinawrey/fsrouter/compare/2.10.0...2.10.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* boot message should show '.' instead of '' if rootDir is cwd ([e8cd760](https://github.com/justinawrey/fsrouter/commit/e8cd76081ac54f60f10311a9a21913f51daf831f))
+
 ## [2.10.0](https://github.com/justinawrey/fsrouter/compare/2.9.1...2.10.0) (2022-08-31)
 
 
