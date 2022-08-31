@@ -3,6 +3,7 @@ import { fsRouter, RouterOptions } from "../mod.ts";
 import { setupLogger } from "../private/log.ts";
 import { usage } from "./usage.ts";
 import { error } from "../private/message.ts";
+import { version } from "../version.ts";
 
 if (!import.meta.main) {
   Deno.exit(0);
@@ -24,6 +25,11 @@ log.debug("Executable called with args:", args);
 
 if (args.help) {
   usage({ verbose: true });
+}
+
+if (args.version) {
+  console.log(version);
+  Deno.exit(0);
 }
 
 const rawArgs = args._;

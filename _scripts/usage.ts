@@ -29,7 +29,8 @@ ${colors.bold("--[no-]debug")}        Show/hide debug information.        ${
 ${colors.bold("--[no-]bootMessage")}  Show/hide boot message on startup.  ${
       colors.bold(colors.italic("[default: show]"))
     }
-${colors.bold("--help")}              Show this help message.`);
+${colors.bold("--help")}              Show this help message.
+${colors.bold("--version")}           Show current version.`);
   }
 
   if (exit) {

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   branches: ["main"],
   plugins: [
     ["@semantic-release/commit-analyzer", { preset: "conventionalcommits" }],
@@ -9,7 +9,7 @@ export default {
     "@semantic-release/changelog",
     ["@semantic-release/exec", {
       prepareCmd:
-        `echo 'export const version = "\${nextRelease.version}'" > version.ts`,
+        `echo 'export const version = "\${nextRelease.version}";' > version.ts`,
     }],
     "@semantic-release/github",
     [

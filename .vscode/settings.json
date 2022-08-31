@@ -1,7 +1,22 @@
 {
   "deno.enable": true,
   "deno.lint": true,
-  "[javascript][typescript][javascriptreact][typescriptreact][jsonc][json]": {
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[jsonc]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   }
 }
