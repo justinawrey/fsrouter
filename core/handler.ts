@@ -1,4 +1,4 @@
-import { http } from "./private/deps.ts";
+import { http } from "../deps.ts";
 
 /**
  * Query is an object of text matched from route wildcards.  See FsHandler example for more details.

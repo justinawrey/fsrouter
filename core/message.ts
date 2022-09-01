@@ -1,4 +1,4 @@
-import { colors, path } from "./deps.ts";
+import { colors, path } from "../deps.ts";
 import { type Route } from "./route.ts";
 
 // Logs a warning message saying that you

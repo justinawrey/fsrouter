@@ -1,4 +1,4 @@
-import { colors, log } from "./deps.ts";
+import { colors, log } from "../deps.ts";
 
 export function setupLogger(debug: boolean): Promise<void> {
   return log.setup({

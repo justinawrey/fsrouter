@@ -1,5 +1,5 @@
-import { path } from "./deps.ts";
-import { type FsHandler } from "../handler.ts";
+import { path } from "../deps.ts";
+import { type FsHandler } from "./handler.ts";
 
 function removeExtension(filePath: string): string {
   const ext = path.extname(filePath);

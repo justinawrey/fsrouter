@@ -1,4 +1,4 @@
-import { colors } from "../private/deps.ts";
+import { colors } from "../deps.ts";
 
 interface UsageOptions {
   verbose?: boolean;

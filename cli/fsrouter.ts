@@ -1,9 +1,9 @@
-import { flags, http, log } from "../private/deps.ts";
-import { fsRouter, RouterOptions } from "../mod.ts";
-import { setupLogger } from "../private/log.ts";
+import { flags, http, log } from "../deps.ts";
+import { fsRouter, RouterOptions } from "../core/entry.ts";
+import { setupLogger } from "../core/log.ts";
 import { usage } from "./usage.ts";
-import { error } from "../private/message.ts";
-import { version } from "../version.ts";
+import { error } from "../core/message.ts";
+import { version } from "./version.ts";
 
 if (!import.meta.main) {
   Deno.exit(0);

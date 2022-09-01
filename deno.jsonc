@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "fsrouter": "deno run --allow-read --allow-net --watch=_scripts/pages _scripts/fsrouter.ts _scripts/pages",
+    "fsrouter": "deno run --allow-read --allow-net --watch=example/pages cli/fsrouter.ts example/pages",
     "format": "deno fmt",
     "lint": "deno lint",
-    "test": "deno test --allow-read --allow-net _test"
+    "test": "deno test --allow-read --allow-net test"
   },
   "fmt": {
     "files": {

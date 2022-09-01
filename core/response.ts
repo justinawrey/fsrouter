@@ -1,4 +1,4 @@
-import { http } from "./deps.ts";
+import { http } from "../deps.ts";
 
 export function notFound(): Response {
   try {
