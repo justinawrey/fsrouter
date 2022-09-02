@@ -27,6 +27,10 @@ function handleRoutes(routes: Route[]): http.Handler {
 
     // Exact route (no slugs) found, serve it
     if (exactRoute) {
+      log.debug(
+        `url ${colors.bold(urlPath)} matched exact file:`,
+        exactRoute.relativePath,
+      );
       return exactRoute.handler(req, {}, connInfo);
     }
 
@@ -34,6 +38,12 @@ function handleRoutes(routes: Route[]): http.Handler {
     for (const slugRoute of slugRoutes) {
       const matches = slugRoute.matches(urlPath);
       if (matches) {
+        log.debug(
+          `url ${urlPath} matched file ${
+            colors.bold(slugRoute.relativePath)
+          } with parameters:`,
+          matches,
+        );
         return slugRoute.handler(req, matches, connInfo);
       }
     }
