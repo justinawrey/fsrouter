@@ -1,5 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.152.0/testing/asserts.ts";
-import { path } from "../deps.ts";
+import { asserts, path } from "../deps.ts";
 import { fsRouter } from "../mod.ts";
 
 const handler = await fsRouter(
@@ -16,33 +15,33 @@ async function makeRequest(path: string): Promise<string> {
 }
 
 Deno.test("Basic handlers defined in .ts files work", async () => {
-  assertEquals(await makeRequest("/about"), "/about");
+  asserts.assertEquals(await makeRequest("/about"), "/about");
 });
 
 Deno.test("Basic handlers defined in .js files work", async () => {
-  assertEquals(await makeRequest("/contact"), "/contact");
+  asserts.assertEquals(await makeRequest("/contact"), "/contact");
 });
 
 Deno.test("Handlers defined in folder index files work", async () => {
-  assertEquals(await makeRequest("/"), "/");
+  asserts.assertEquals(await makeRequest("/"), "/");
 });
 
 Deno.test("Handlers defined in nested folder index files work", async () => {
-  assertEquals(await makeRequest("/blog"), "/blog");
+  asserts.assertEquals(await makeRequest("/blog"), "/blog");
 });
 
 Deno.test("Basic nested handlers work", async () => {
-  assertEquals(await makeRequest("/blog/post"), "/blog/post");
+  asserts.assertEquals(await makeRequest("/blog/post"), "/blog/post");
 });
 
 Deno.test("Handlers with slugs work", async () => {
-  assertEquals(await makeRequest("/arbitrary"), "/arbitrary");
+  asserts.assertEquals(await makeRequest("/arbitrary"), "/arbitrary");
 });
 
 Deno.test("Handlers with nested slugs work", async () => {
-  assertEquals(await makeRequest("/blog/123"), "/blog/123");
+  asserts.assertEquals(await makeRequest("/blog/123"), "/blog/123");
 });
 
 Deno.test("Responds with 404 when route not found", async () => {
-  assertEquals(await makeRequest("/this/is/not/a/route"), "Not Found");
+  asserts.assertEquals(await makeRequest("/this/is/not/a/route"), "Not Found");
 });
