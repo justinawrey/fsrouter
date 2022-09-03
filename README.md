@@ -2,7 +2,7 @@
 
 A file system based router for [Deno](https://deno.land).
 
-## Usage
+## Basic usage
 
 Given a project with the following folder structure:
 
@@ -95,6 +95,40 @@ Results in routes being served as follows:
 | `pages/about.ts`      | `/about`     |
 | `pages/blog/index.ts` | `/blog`      |
 | `pages/blog/post.ts`  | `/blog/post` |
+
+An options object can be provided as the second argument to `fsRouter`. See
+[RouterOptions](https://deno.land/x/fsrouter@2.11.1/mod.ts?s=RouterOptions) for
+details.
+
+## Dynamic routes
+
+Dynamic routes are supported using the `[slug]` syntax. This works for files,
+folders, or both. For example:
+
+| File                   | Matches                            |
+| ---------------------- | ---------------------------------- |
+| `pages/blog/[id].ts`   | `/blog/123`, `/blog/my-first-post` |
+| `pages/[id1]/[id2].ts` | `/any/route`                       |
+| `pages/[fallback].ts`  | `/caught-all`, `/any`              |
+
+Matching slug values are provided as the second argument to `FsHandler`. Given
+the files as defined in the table above, the route `/any/route` will be provided
+a slug object of the shape `{ id1: 'any', id2: 'route' }`:
+
+```typescript
+// my-app/pages/[id1]/[id2].ts
+import { type Slugs } from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
+
+// req url: /any/route
+export default (req: Request, slugs: Slugs) => {
+  console.log(slugs.id1); // 'any'
+  console.log(slugs.id2); // 'route'
+
+  return new Response("Matched dynamic route!");
+};
+```
+
+## Watch mode
 
 During development, you can use Deno's built-in `--watch=<folder>` to restart
 the server on changes. Providing a bare `--watch` has the caveat of not being
