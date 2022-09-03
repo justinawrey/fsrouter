@@ -16,6 +16,11 @@ function handleRoutes(routes: Route[]): http.Handler {
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
 
+  log.debug(
+    "slug matching order:",
+    slugRoutes.map((route) => route.parsed),
+  );
+
   // Make a map out of the exact routes for easier lookup
   const exactRouteMap = new Map<string, Route>(
     exactRoutes.map((route) => [route.parsed, route]),

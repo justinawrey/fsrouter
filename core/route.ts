@@ -62,9 +62,23 @@ export class Route {
     );
   }
 
-  // Sort an array of routes by length, longest to shortest
+  // Sort an array of routes by number of raw parts, longest to shortest
   static sort(routes: Route[]): Route[] {
-    routes.sort((a, b) => b.length - a.length);
+    routes.sort((a, b) => {
+      const lengthFactor = b.rawParts.length - a.rawParts.length;
+
+      // If they're the same length, we could be in an inconclusive situation like:
+      // a: /[test]/raw
+      // b: /blog/[id]
+      // In this case, sort by longest 'raw base path'
+      if (lengthFactor === 0) {
+        return b.baseLength - a.baseLength;
+      }
+
+      // Otherwise just sort by sheer number of raw parts
+      return lengthFactor;
+    });
+
     return routes;
   }
 
@@ -87,16 +101,37 @@ export class Route {
     return this.parts.length;
   }
 
+  // The length of the 'base' of the route, e.g. how many raw
+  // parts it has before a slug part occurs.
+  // For example, /hi/its/[me] has baseLength 2.
+  get baseLength(): number {
+    let baseLength = 0;
+
+    for (const part of this.parts) {
+      if (!isSlug(part)) {
+        baseLength++;
+      } else {
+        break;
+      }
+    }
+
+    return baseLength;
+  }
+
   // Slugs from the filename, with the '[' and ']' characters stripped away
-  get slugs(): string[] {
+  get slugParts(): string[] {
     return this.parts.filter((part) => isSlug(part)).map((slug) =>
       slug.slice(1, -1)
     );
   }
 
-  // Whether or not this route has slugs in it
+  get rawParts(): string[] {
+    return this.parts.filter((part) => !isSlug(part));
+  }
+
+  // Whether or not this route has slugParts in it
   get hasSlugs(): boolean {
-    return this.slugs.length > 0;
+    return this.slugParts.length > 0;
   }
 
   get regEx(): RegExp {
@@ -116,7 +151,7 @@ export class Route {
 
     const matchObj: Record<string, string> = {};
     for (const [index, match] of matches.slice(1).entries()) {
-      matchObj[this.slugs[index]] = match;
+      matchObj[this.slugParts[index]] = match;
     }
 
     return matchObj;
