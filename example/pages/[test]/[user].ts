@@ -1,7 +1,7 @@
 import { type FsHandler } from "../../../mod.ts";
 
-const handler: FsHandler = (_req, query) => {
-  return new Response(`/${query.test}/${query.user}`);
+const handler: FsHandler = (_req, slugs) => {
+  return new Response(`/${slugs.test}/${slugs.user}`);
 };
 
 export default handler;

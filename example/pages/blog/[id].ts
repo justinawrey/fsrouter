@@ -1,3 +1,3 @@
-export default (_req: Request, query: Record<string, string>) => {
-  return new Response(`/blog/${query.id}`);
+export default (_req: Request, slugs: Record<string, string>) => {
+  return new Response(`/blog/${slugs.id}`);
 };
