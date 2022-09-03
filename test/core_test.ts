@@ -42,6 +42,10 @@ Deno.test("Handlers with nested slugs work", async () => {
   asserts.assertEquals(await makeRequest("/blog/123"), "/blog/123");
 });
 
+Deno.test("Longest routes are matched first", async () => {
+  asserts.assertEquals(await makeRequest("/blog/123/out"), "/blog/123/out");
+});
+
 Deno.test("Responds with 404 when route not found", async () => {
   asserts.assertEquals(await makeRequest("/this/is/not/a/route"), "Not Found");
 });
