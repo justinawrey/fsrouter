@@ -5,6 +5,10 @@ interface UsageOptions {
   exit?: boolean;
 }
 
+function defaultMessage(message: string): string {
+  return colors.bold(colors.italic(`[default: ${message}]`));
+}
+
 // TODO: go from camelcase to kebab case
 // TODO: this help message should be derived from the actual args state
 export function usage(
@@ -24,11 +28,14 @@ ${colors.bold("rootDir")}             Directory from which to serve routes.
 
 ${colors.bold(colors.gray(colors.italic("Options:")))}
 ${colors.bold("--[no-]debug")}        Show/hide debug information.        ${
-      colors.bold(colors.italic("[default: hide]"))
+      defaultMessage("hide")
     }
 ${colors.bold("--[no-]bootMessage")}  Show/hide boot message on startup.  ${
-      colors.bold(colors.italic("[default: show]"))
+      defaultMessage("show")
     }
+${colors.bold("--[no-]watch")}        Run in/don't run in watch mode.     ${
+      defaultMessage("run in watch mode")
+    }  
 ${colors.bold("--help")}              Show this help message.
 ${colors.bold("--version")}           Show current version.`);
   }

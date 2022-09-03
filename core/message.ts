@@ -11,6 +11,10 @@ export function errorRootDirEmpty(rootDir: string): void {
   console.log("");
 }
 
+export function errDirNotFound(rootDir: string): void {
+  error(`directory ${colors.bold(rootDir)} could not be found`);
+}
+
 // Logs a boot message containing information about
 // which files map to which routes
 export function bootMessage(routes: Route[], rootDir: string): void {
