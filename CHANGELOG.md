@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/justinawrey/fsrouter/compare/2.11.0...2.11.1) (2022-09-03)
+
+
+### Bug Fixes
+
+* more deterministic route matching for routes with multiple slugs ([3d71ae4](https://github.com/justinawrey/fsrouter/commit/3d71ae442f9f62c07c21293baa5cb58647364728))
+
 ## [2.11.0](https://github.com/justinawrey/fsrouter/compare/2.10.1...2.11.0) (2022-08-31)
 
 
