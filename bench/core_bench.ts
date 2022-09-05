@@ -1,4 +1,4 @@
-import { fsRouter } from "../core/entry.ts";
+import { fsRouter } from "../core/handler.ts";
 import { path } from "../deps.ts";
 
 // @ts-ignore - bench exists?

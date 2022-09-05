@@ -1,5 +1,5 @@
 import { flags, http, log } from "../deps.ts";
-import { fsRouter, RouterOptions } from "../core/entry.ts";
+import { fsRouter, RouterOptions } from "../core/handler.ts";
 import { setupLogger } from "../core/log.ts";
 import { usage } from "./usage.ts";
 import { error } from "../core/message.ts";
