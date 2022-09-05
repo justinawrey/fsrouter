@@ -1,3 +1,11 @@
+## [2.12.0](https://github.com/justinawrey/fsrouter/compare/2.11.1...2.12.0) (2022-09-05)
+
+
+### Features
+
+* add option for toggling automatic number conversion behavior ([1f12358](https://github.com/justinawrey/fsrouter/commit/1f12358fb8a167173d4b2df56cf30f934b70e2ee))
+* allow typed slugs based on :string or :number postfix ([154ecf2](https://github.com/justinawrey/fsrouter/commit/154ecf2782fba4136b19c1da273808cd704b82dd))
+
 ## [2.11.1](https://github.com/justinawrey/fsrouter/compare/2.11.0...2.11.1) (2022-09-03)
 
 
