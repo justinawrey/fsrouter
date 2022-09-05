@@ -52,6 +52,8 @@ function handleRoutes(routes: Route[]): http.Handler {
           } with parameters:`,
           matches,
         );
+        log.debug("Matched with pattern:", slugRoute.regEx.toString());
+
         return slugRoute.handler(req, matches, connInfo);
       }
     }

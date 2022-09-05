@@ -1,9 +1,10 @@
 import { http } from "../deps.ts";
+import { type Matches } from "./slug.ts";
 
 /**
  * Slugs is an object of text matched from route wildcards.  See FsHandler example for more details.
  */
-export type Slugs = Readonly<Record<string, string>>;
+export type Slugs = Readonly<Matches>;
 
 /**
  * Every file to which routes are being served must export a function of type FsHandler as its

@@ -38,8 +38,12 @@ Deno.test("Handlers with slugs work", async () => {
   asserts.assertEquals(await makeRequest("/arbitrary"), "/arbitrary");
 });
 
-Deno.test("Handlers with nested slugs work", async () => {
-  asserts.assertEquals(await makeRequest("/blog/123"), "/blog/123");
+Deno.test("Handlers with :number typed slugs work", async () => {
+  asserts.assertEquals(await makeRequest("/blog/123"), "/blog/123 (number)");
+});
+
+Deno.test("Handlers with :string typed slugs work", async () => {
+  asserts.assertEquals(await makeRequest("/blog/hi"), "/blog/hi (string)");
 });
 
 Deno.test("Longest routes are matched first", async () => {

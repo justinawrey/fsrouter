@@ -1,5 +1,7 @@
 import { path } from "../deps.ts";
 import { type FsHandler } from "./types.ts";
+import { Slug } from "./slug.ts";
+import { type Matches } from "./slug.ts";
 
 function removeExtension(filePath: string): string {
   const ext = path.extname(filePath);
@@ -12,10 +14,6 @@ function removeIndex(filePath: string): string {
   }
 
   return filePath.slice(0, -6);
-}
-
-function isSlug(part: string): boolean {
-  return part.startsWith("[") && part.endsWith("]") && part.length > 2;
 }
 
 // parseRoute takes an absolute file path and transforms it into
@@ -108,7 +106,7 @@ export class Route {
     let baseLength = 0;
 
     for (const part of this.parts) {
-      if (!isSlug(part)) {
+      if (!Slug.isSlug(part)) {
         baseLength++;
       } else {
         break;
@@ -119,39 +117,49 @@ export class Route {
   }
 
   // Slugs from the filename, with the '[' and ']' characters stripped away
-  get slugParts(): string[] {
-    return this.parts.filter((part) => isSlug(part)).map((slug) =>
-      slug.slice(1, -1)
+  get slugs(): Slug[] {
+    return this.parts.filter((part) => Slug.isSlug(part)).map((slug) =>
+      new Slug(slug)
     );
   }
 
   get rawParts(): string[] {
-    return this.parts.filter((part) => !isSlug(part));
+    return this.parts.filter((part) => !Slug.isSlug(part));
   }
 
-  // Whether or not this route has slugParts in it
+  // Whether or not this route has slugs in it
   get hasSlugs(): boolean {
-    return this.slugParts.length > 0;
+    return this.slugs.length > 0;
   }
 
   get regEx(): RegExp {
+    function getPartRegex(part: string): string {
+      if (!Slug.isSlug(part)) {
+        return part;
+      }
+
+      return new Slug(part).regEx;
+    }
+
     return new RegExp(
       "^\\/" +
-        this.parts.map((part) => isSlug(part) ? "(\\w+)" : part).join("\\/") +
+        this.parts.map(getPartRegex).join("\\/") +
         "$",
       "g",
     );
   }
 
-  matches(urlPath: string): Record<string, string> | null {
+  matches(urlPath: string): Matches | null {
     const matches = this.regEx.exec(urlPath);
     if (!matches) {
       return null;
     }
 
-    const matchObj: Record<string, string> = {};
+    const matchObj: Matches = {};
     for (const [index, match] of matches.slice(1).entries()) {
-      matchObj[this.slugParts[index]] = match;
+      matchObj[this.slugs[index].raw] = this.slugs[index].type === "number"
+        ? parseInt(match)
+        : match;
     }
 
     return matchObj;
