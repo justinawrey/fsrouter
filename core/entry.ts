@@ -1,9 +1,12 @@
 import { colors, fs, http, log } from "../deps.ts";
-import { bootMessage as _bootMessage, errorRootDirEmpty } from "./message.ts";
+import {
+  bootMessage as _bootMessage,
+  errDirNotFound,
+  errorRootDirEmpty,
+} from "./message.ts";
 import { notFound } from "./response.ts";
 import { Route } from "./route.ts";
 import { setupLogger } from "./log.ts";
-import { error } from "./message.ts";
 
 // Re-export
 export * from "./handler.ts";
@@ -17,7 +20,7 @@ function handleRoutes(routes: Route[]): http.Handler {
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
 
   log.debug(
-    "slug matching order:",
+    "Slug matching order:",
     slugRoutes.map((route) => route.parsed),
   );
 
@@ -33,7 +36,7 @@ function handleRoutes(routes: Route[]): http.Handler {
     // Exact route (no slugs) found, serve it
     if (exactRoute) {
       log.debug(
-        `url ${colors.bold(urlPath)} matched exact file:`,
+        `Url ${colors.bold(urlPath)} matched exact file:`,
         exactRoute.relativePath,
       );
       return exactRoute.handler(req, {}, connInfo);
@@ -44,7 +47,7 @@ function handleRoutes(routes: Route[]): http.Handler {
       const matches = slugRoute.matches(urlPath);
       if (matches) {
         log.debug(
-          `url ${urlPath} matched file ${
+          `Url ${urlPath} matched file ${
             colors.bold(slugRoute.relativePath)
           } with parameters:`,
           matches,
@@ -80,7 +83,7 @@ async function discoverRoutes(rootDir: string): Promise<Route[]> {
     // Deno bug: error should be instance of Deno.errors.NotFound
     // https://github.com/denoland/deno_std/issues/1310
     // TODO: isolate the error better when this is fixed
-    error(`directory ${colors.bold(rootDir)} could not be found`);
+    errDirNotFound(rootDir);
     Deno.exit(0);
   }
 
