@@ -149,7 +149,7 @@ export class Route {
     );
   }
 
-  matches(urlPath: string): Matches | null {
+  matches(urlPath: string, convertToNumber: boolean): Matches | null {
     const matches = this.regEx.exec(urlPath);
     if (!matches) {
       return null;
@@ -157,9 +157,10 @@ export class Route {
 
     const matchObj: Matches = {};
     for (const [index, match] of matches.slice(1).entries()) {
-      matchObj[this.slugs[index].raw] = this.slugs[index].type === "number"
-        ? parseInt(match)
-        : match;
+      const shouldConvert = this.slugs[index].type === "number" &&
+        convertToNumber;
+
+      matchObj[this.slugs[index].raw] = shouldConvert ? parseInt(match) : match;
     }
 
     return matchObj;

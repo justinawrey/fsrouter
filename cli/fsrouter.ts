@@ -12,6 +12,7 @@ if (!import.meta.main) {
 const defaultOptions: Required<RouterOptions> = {
   debug: false,
   bootMessage: true,
+  convertToNumber: true,
 };
 
 const args = flags.parse(Deno.args, {

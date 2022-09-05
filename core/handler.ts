@@ -14,7 +14,7 @@ export * from "./handler.ts";
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(routes: Route[]): http.Handler {
+function handleRoutes(routes: Route[], convertToNumber: boolean): http.Handler {
   // Split routes into ones that are exact (don't have slugs) and ones that aren't
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
@@ -44,7 +44,7 @@ function handleRoutes(routes: Route[]): http.Handler {
 
     // Otherwise, try matching slug routes
     for (const slugRoute of slugRoutes) {
-      const matches = slugRoute.matches(urlPath);
+      const matches = slugRoute.matches(urlPath, convertToNumber);
       if (matches) {
         log.debug(
           `Url ${urlPath} matched file ${
@@ -109,6 +109,18 @@ export interface RouterOptions {
    * Defaults to false.
    */
   debug?: boolean;
+
+  /**
+   * Whether or not slugs of type :number should be automatically converted to numbers
+   * in the matches object.
+   *
+   * For example, given the slug [id:number]:
+   * - if convertToNumber === true, then (typeof slugs.id) === 'number'
+   * - if convertToNumber === false, then (typeof slugs.id) === 'string'
+   *
+   * Defaults to true.
+   */
+  convertToNumber?: boolean;
 }
 
 /**
@@ -164,6 +176,7 @@ export async function fsRouter(
   {
     debug = false,
     bootMessage = true,
+    convertToNumber = true,
   }: RouterOptions = {},
 ): Promise<http.Handler> {
   await setupLogger(debug);
@@ -181,5 +194,5 @@ export async function fsRouter(
     _bootMessage(routes, rootDir);
   }
 
-  return handleRoutes(routes);
+  return handleRoutes(routes, convertToNumber);
 }
