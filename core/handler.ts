@@ -9,7 +9,7 @@ import { Route } from "./route.ts";
 import { setupLogger } from "./log.ts";
 
 // Re-export
-export * from "./handler.ts";
+export * from "./types.ts";
 
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
