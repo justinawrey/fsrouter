@@ -44,7 +44,4 @@ if (rawArgs.length > 1) {
 }
 
 const rootDir = rawArgs[0].toString();
-const routerOptions: Omit<typeof args, "_"> = { ...args };
-delete routerOptions._;
-
-http.serve(await fsRouter(rootDir, routerOptions as RouterOptions));
+http.serve(await fsRouter(rootDir, args));
