@@ -105,11 +105,11 @@ details.
 Dynamic routes are supported using the `[slug]` syntax. This works for files,
 folders, or both. For example:
 
-| File                   | Matches                            |
-| ---------------------- | ---------------------------------- |
-| `pages/blog/[id].ts`   | `/blog/123`, `/blog/my-first-post` |
-| `pages/[id1]/[id2].ts` | `/any/route`                       |
-| `pages/[fallback].ts`  | `/caught-all`, `/any`              |
+| File                   | Matches                         |
+| ---------------------- | ------------------------------- |
+| `pages/blog/[id].ts`   | `/blog/123`, `/blog/first-post` |
+| `pages/[id1]/[id2].ts` | `/any/route`                    |
+| `pages/[fallback].ts`  | `/caught-all`, `/any`           |
 
 Matching slug values are provided as the second argument to `FsHandler`. Given
 the files as defined in the table above, the route `/any/route` will be provided
@@ -127,6 +127,34 @@ export default (req: Request, slugs: Slugs) => {
   return new Response("Matched dynamic route!");
 };
 ```
+
+## Typed dynamic routes
+
+Slugs can optionally include a `:string` or `:number` postfix to exclusively
+match strings and numbers respectively. For example:
+
+| File                        | Matches                                 |
+| --------------------------- | --------------------------------------- |
+| `pages/blog/[id:number].ts` | `/blog/123`, `/blog/45`                 |
+| `pages/blog/[id:string].ts` | `/blog/first-post`, `/blog/second-post` |
+
+Matches for slugs of type `:number` will be automatically converted to type
+`number`:
+
+```typescript
+// my-app/pages/blog/[id:number].ts
+import { type Slugs } from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
+
+// req url: /blog/123
+export default (req: Request, slugs: Slugs) => {
+  console.log(typeof slugs.id); // 'number'
+
+  return new Response("Matched dynamic route!");
+};
+```
+
+This automatic conversion behaviour can be disabled via
+[RouterOptions.convertToNumber](https://deno.land/x/fsrouter@2.11.1/mod.ts?s=RouterOptions).
 
 ## Watch mode
 
