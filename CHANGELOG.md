@@ -1,3 +1,10 @@
+## [2.12.2](https://github.com/justinawrey/fsrouter/compare/2.12.1...2.12.2) (2022-09-10)
+
+
+### Bug Fixes
+
+* typed slugs should match before untyped slugs ([233aa1f](https://github.com/justinawrey/fsrouter/commit/233aa1fde7f8c0d27d71c3bccf230f566c0e39fe))
+
 ## [2.12.1](https://github.com/justinawrey/fsrouter/compare/2.12.0...2.12.1) (2022-09-05)
 
 
