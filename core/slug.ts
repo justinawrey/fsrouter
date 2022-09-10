@@ -35,6 +35,10 @@ export class Slug {
     return null;
   }
 
+  get hasType(): boolean {
+    return !!this.type;
+  }
+
   // A regex string, as can be supplied to new Regex(...)
   get regEx(): string {
     if (this.type === "string") {
