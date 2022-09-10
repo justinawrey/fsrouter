@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/justinawrey/fsrouter/compare/2.12.0...2.12.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* correct broken types re-export from mod.ts ([ecb810f](https://github.com/justinawrey/fsrouter/commit/ecb810fc6e112496d0801f34963dbccb8d582ca1))
+
 ## [2.12.0](https://github.com/justinawrey/fsrouter/compare/2.11.1...2.12.0) (2022-09-05)
 
 
