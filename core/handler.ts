@@ -179,7 +179,7 @@ export async function fsRouter(
     convertToNumber = true,
   }: RouterOptions = {},
 ): Promise<http.Handler> {
-  await setupLogger(debug);
+  setupLogger(debug);
 
   log.debug("fsRouter initialized with root dir:", rootDir);
   log.debug("fsRouter initialized with options:", { debug, bootMessage });

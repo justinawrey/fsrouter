@@ -21,7 +21,7 @@ const args = flags.parse(Deno.args, {
   negatable: Object.keys(defaultOptions),
 });
 
-await setupLogger(args.debug);
+setupLogger(args.debug);
 log.debug("Executable called with args:", args);
 
 if (args.help) {
