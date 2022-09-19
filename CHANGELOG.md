@@ -1,3 +1,10 @@
+## [2.13.0](https://github.com/justinawrey/fsrouter/compare/2.12.2...2.13.0) (2022-09-19)
+
+
+### Features
+
+* use std 0.156.0 ([481849f](https://github.com/justinawrey/fsrouter/commit/481849f546cb1925b44e91d238a5a3a74248f4f5))
+
 ## [2.12.2](https://github.com/justinawrey/fsrouter/compare/2.12.1...2.12.2) (2022-09-10)
 
 
