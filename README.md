@@ -170,8 +170,14 @@ deno run --allow-read --allow-net --watch=pages my-app/mod.ts
 
 ## Permissions
 
-Since `fsrouter` requires access to both the network and the file system,
-`--allow-read` and `--allow-net` are required arguments when executing modules.
+Using `fsrouter` requires both `--allow-read` and `--allow-net` for the
+following reasons:
+
+- `--allow-read`: `fsrouter` needs to traverse the filesystem in order to
+  discover handler files
+- `--allow-net`: `fsrouter` itself doesn't actually need network access, but
+  since it's very likely your script will include using `fsrouter` in tandem
+  with some sort of file server, you'll likely need this permission grant
 
 ## Deno Deploy
 
