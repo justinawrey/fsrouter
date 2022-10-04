@@ -8,4 +8,4 @@ export * as flags from "https://deno.land/std@0.156.0/flags/mod.ts";
 export * as asserts from "https://deno.land/std@0.156.0/testing/asserts.ts";
 
 // Third-party
-export * as jsonTree from "https://deno.land/x/json_tree@latest/mod.ts";
+export { default as jsonTree } from "https://deno.land/x/jsontree@0.5.0/mod.ts";
