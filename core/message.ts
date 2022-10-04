@@ -1,6 +1,5 @@
 import { colors, jsonTree, path } from "../deps.ts";
 import { type Route } from "./route.ts";
-import { iterate } from "./util.ts";
 
 // Logs a warning message saying that you
 // may have accidentally started a server with no routes
@@ -31,6 +30,7 @@ export function bootMessage(routes: Route[], rootDir: string): void {
     ),
   );
 
+  // TODO: all of this is ripe for cleaning up
   // deno-lint-ignore no-explicit-any
   const tree: Record<any, any> = {
     [formattedRootDir]: {},
@@ -51,9 +51,31 @@ export function bootMessage(routes: Route[], rootDir: string): void {
     root = tree[formattedRootDir];
   }
 
-  iterate(tree);
+  // Traverse again to fill in displayed routes
+  // deno-lint-ignore no-explicit-any
+  function traverse(root: Record<any, any>, displayRoute: string) {
+    for (const key in root) {
+      const nextTree = root[key];
+      const nextDisplayRoute = `${displayRoute}/${key}`;
 
-  console.log(jsonTree.jsonTree(tree, false));
+      if (Object.keys(nextTree).length === 0) {
+        root[key] = nextDisplayRoute;
+      }
+
+      traverse(nextTree, nextDisplayRoute);
+    }
+  }
+  traverse(root, "");
+
+  const treeString = jsonTree(tree, {
+    showValues: true,
+    align: true,
+    seperator: "  →   ",
+    keyTransform: (key, leaf) => leaf ? colors.cyan(key) : key,
+    valueTransform: (key) => colors.bold(colors.italic(key)),
+  });
+
+  console.log(`${treeString}\n`);
 }
 
 export function error(msg: string): void {
