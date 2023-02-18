@@ -7,15 +7,11 @@ module.exports = {
       { preset: "conventionalcommits" },
     ],
     "@semantic-release/changelog",
-    ["@semantic-release/exec", {
-      prepareCmd:
-        `echo 'export const version = "\${nextRelease.version}";' > cli/version.ts`,
-    }],
     "@semantic-release/github",
     [
       "@semantic-release/git",
       {
-        assets: ["CHANGELOG.md", "cli/version.ts"],
+        assets: ["CHANGELOG.md"],
         message:
           "chore(release): ${nextRelease.gitTag} [skip ci]\\n\\n${nextRelease.notes}",
       },
