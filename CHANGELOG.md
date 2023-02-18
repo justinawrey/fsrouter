@@ -1,3 +1,10 @@
+## [2.14.0](https://github.com/justinawrey/fsrouter/compare/2.13.0...2.14.0) (2023-02-18)
+
+
+### Features
+
+* adds prettier boot message ([1b2c451](https://github.com/justinawrey/fsrouter/commit/1b2c451c434f78f22689384326a36c29ad9aac1f))
+
 ## [2.13.0](https://github.com/justinawrey/fsrouter/compare/2.12.2...2.13.0) (2022-09-19)
 
 
