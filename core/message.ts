@@ -1,5 +1,5 @@
 import { colors, jsonTree, path } from "../deps.ts";
-import { type Route } from "./route.ts";
+import { removeExtension, type Route } from "./route.ts";
 
 // Logs a warning message saying that you
 // may have accidentally started a server with no routes
@@ -72,13 +72,7 @@ export function bootMessage(routes: Route[], rootDir: string): void {
     align: true,
     seperator: "  →   ",
     keyTransform: (key, leaf) => leaf ? colors.cyan(key) : key,
-    valueTransform: (key) => {
-      // Strip off trailing file extension
-      const ext = path.extname(key);
-      const stripped = key.slice(0, -ext.length);
-
-      return colors.bold(colors.italic(stripped));
-    },
+    valueTransform: (key) => colors.bold(colors.italic(removeExtension(key))),
   });
 
   console.log(`${treeString}\n`);

@@ -3,7 +3,7 @@ import { type FsHandler } from "./types.ts";
 import { Slug } from "./slug.ts";
 import { type Matches } from "./slug.ts";
 
-function removeExtension(filePath: string): string {
+export function removeExtension(filePath: string): string {
   const ext = path.extname(filePath);
   return filePath.slice(0, -ext.length);
 }
