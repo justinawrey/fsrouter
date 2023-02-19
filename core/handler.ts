@@ -14,7 +14,7 @@ export * from "./types.ts";
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(routes: Route[], convertToNumber: boolean): http.Handler {
+function handleRoutes(routes: Route[], options: RouterOptions): http.Handler {
   // Split routes into ones that are exact (don't have slugs) and ones that aren't
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
@@ -44,7 +44,7 @@ function handleRoutes(routes: Route[], convertToNumber: boolean): http.Handler {
 
     // Otherwise, try matching slug routes
     for (const slugRoute of slugRoutes) {
-      const matches = slugRoute.matches(urlPath, convertToNumber);
+      const matches = slugRoute.matches(urlPath, options.convertToNumber);
       if (matches) {
         log.debug(
           `Url ${urlPath} matched file ${
@@ -201,5 +201,5 @@ export async function fsRouter(
     _bootMessage(routes, rootDir);
   }
 
-  return handleRoutes(routes, mergedOptions.convertToNumber);
+  return handleRoutes(routes, mergedOptions);
 }
