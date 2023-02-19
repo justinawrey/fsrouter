@@ -1,3 +1,14 @@
+## [3.0.0](https://github.com/justinawrey/fsrouter/compare/2.14.1...3.0.0) (2023-02-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* disallow relative paths and auto unwrap file:// paths
+
+### Bug Fixes
+
+* disallow relative paths and auto unwrap file:// paths ([b8a4aa4](https://github.com/justinawrey/fsrouter/commit/b8a4aa43c616b39ac1a8ba7f6016c2bf83158553))
+
 ## [2.14.1](https://github.com/justinawrey/fsrouter/compare/2.14.0...2.14.1) (2023-02-19)
 
 
