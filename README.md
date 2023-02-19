@@ -78,7 +78,9 @@ import { fsRouter } from "https://deno.land/x/fsrouter@{VERSION}/mod.ts";
 import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
 
 // Use the file system router with base directory 'pages'
-serve(await fsRouter("pages"));
+// The first argument to fsRouter requires an absolute path
+// Paths starting with 'file://' are okay
+serve(await fsRouter(import.meta.resolve("./pages")));
 ```
 
 Now running:

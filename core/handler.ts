@@ -168,10 +168,10 @@ const defaultOptions: RouterOptions = {
  * import { serve } from "https://deno.land/std@{VERSION}/http/server.ts";
  *
  * // Use the file system router with base directory 'pages'
- * serve(await fsRouter("pages"));
+ * serve(await fsRouter(import.meta.resolve("./pages")));
  *
  * // Or, provide an options (RouterOptions) object:
- * // serve(await fsRouter("pages"), { bootMessage: false });
+ * // serve(await fsRouter(import.meta.resolve("./pages")), { bootMessage: false });
  * ```
  *
  * @param rootDir The directory at which routes will be served
