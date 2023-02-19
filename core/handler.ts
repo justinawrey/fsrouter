@@ -89,6 +89,7 @@ async function discoverRoutes(rootDir: string): Promise<Route[]> {
     Deno.exit(0);
   }
 
+  log.debug("fs.walk found", files.length, "entries:", files);
   return Promise.all(
     files.map((file) => Route.create(file.path, rootDir)),
   );
