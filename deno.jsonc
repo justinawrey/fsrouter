@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "start": "deno run -A example/mod.ts",
     "format": "deno fmt",
     "lint": "deno lint",
     "test": "deno test --allow-read --allow-net test"
