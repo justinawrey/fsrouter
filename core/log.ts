@@ -10,11 +10,25 @@ export function setupLogger(debug: boolean): void {
           } ${msg}`;
 
           for (const arg of args) {
-            baseLog += " " + colors.bold(
-              typeof arg === "object"
-                ? JSON.stringify(arg, null, 2)
-                : arg as string,
-            );
+            let formattedArg = "";
+
+            switch (typeof arg) {
+              case "object":
+                formattedArg = colors.bold(JSON.stringify(arg, null, 2));
+                break;
+
+              case "number":
+                formattedArg = colors.bold(arg.toString());
+                break;
+
+              case "string":
+                formattedArg = arg;
+                break;
+
+              default:
+            }
+
+            baseLog += ` ${formattedArg}`;
           }
 
           return colors.yellow(baseLog);
