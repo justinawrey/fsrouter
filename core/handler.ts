@@ -1,11 +1,11 @@
 import { colors, fs, http, log } from "../deps.ts";
 import {
   bootMessage as _bootMessage,
-  errDirNotFound,
+  errorDirNotFound,
   errorRootDirEmpty,
 } from "./message.ts";
 import { notFound } from "./response.ts";
-import { Route } from "./route.ts";
+import { normalizeRootDir, Route } from "./route.ts";
 import { setupLogger } from "./log.ts";
 
 // Re-export
@@ -85,7 +85,7 @@ async function discoverRoutes(rootDir: string): Promise<Route[]> {
     // Deno bug: error should be instance of Deno.errors.NotFound
     // https://github.com/denoland/deno_std/issues/1310
     // TODO: isolate the error better when this is fixed
-    errDirNotFound(rootDir);
+    errorDirNotFound(rootDir);
     Deno.exit(0);
   }
 
@@ -192,6 +192,7 @@ export async function fsRouter(
   log.debug("fsRouter initialized with root dir:", rootDir);
   log.debug("fsRouter initialized with options:", mergedOptions);
 
+  rootDir = normalizeRootDir(rootDir);
   const routes = await discoverRoutes(rootDir);
   if (routes.length === 0) {
     errorRootDirEmpty(rootDir);

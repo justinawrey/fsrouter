@@ -1,7 +1,8 @@
-import { path } from "../deps.ts";
+import { log, path } from "../deps.ts";
 import { type FsHandler } from "./types.ts";
 import { Slug } from "./slug.ts";
 import { type Matches } from "./slug.ts";
+import { errorRootDirRelative } from "./message.ts";
 
 export function removeExtension(filePath: string): string {
   const ext = path.extname(filePath);
@@ -14,6 +15,21 @@ function removeIndex(filePath: string): string {
   }
 
   return filePath.slice(0, -6);
+}
+
+export function normalizeRootDir(rootDir: string): string {
+  let normalizedRootDir = rootDir;
+  if (rootDir.startsWith("file://")) {
+    normalizedRootDir = rootDir.substring("file://".length);
+  }
+
+  if (!path.isAbsolute(normalizedRootDir)) {
+    errorRootDirRelative(rootDir);
+    Deno.exit(0);
+  }
+
+  log.debug("Normalized rootDir from:", rootDir, "to:", normalizedRootDir);
+  return normalizedRootDir;
 }
 
 // parseRoute takes an absolute file path and transforms it into

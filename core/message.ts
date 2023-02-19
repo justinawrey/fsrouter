@@ -11,8 +11,18 @@ export function errorRootDirEmpty(rootDir: string): void {
   console.log("");
 }
 
-export function errDirNotFound(rootDir: string): void {
+export function errorDirNotFound(rootDir: string): void {
   error(`directory ${colors.bold(rootDir)} could not be found`);
+}
+
+export function errorRootDirRelative(rootDir: string): void {
+  error(
+    `directory ${
+      colors.bold(rootDir)
+    } is a relative path - please provide an absolute path using ${
+      colors.bold("import.meta.resolve")
+    }`,
+  );
 }
 
 // Logs a boot message containing information about
