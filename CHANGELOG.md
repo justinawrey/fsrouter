@@ -1,3 +1,10 @@
+## [2.14.1](https://github.com/justinawrey/fsrouter/compare/2.14.0...2.14.1) (2023-02-19)
+
+
+### Bug Fixes
+
+* strip file extension from route in boot msg ([81d229e](https://github.com/justinawrey/fsrouter/commit/81d229e4167749702ef57323d28ecac40aaee471))
+
 ## [2.14.0](https://github.com/justinawrey/fsrouter/compare/2.13.0...2.14.0) (2023-02-18)
 
 
