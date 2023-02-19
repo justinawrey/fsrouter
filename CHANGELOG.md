@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/justinawrey/fsrouter/compare/3.0.0...3.0.1) (2023-02-19)
+
+
+### Bug Fixes
+
+* boot message display incorrect for certain cwds ([cc4ba83](https://github.com/justinawrey/fsrouter/commit/cc4ba8398e95484bd577eba0ca830141fbf7e8ea))
+
 ## [3.0.0](https://github.com/justinawrey/fsrouter/compare/2.14.1...3.0.0) (2023-02-19)
 
 
