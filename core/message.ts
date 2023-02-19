@@ -72,7 +72,13 @@ export function bootMessage(routes: Route[], rootDir: string): void {
     align: true,
     seperator: "  →   ",
     keyTransform: (key, leaf) => leaf ? colors.cyan(key) : key,
-    valueTransform: (key) => colors.bold(colors.italic(key)),
+    valueTransform: (key) => {
+      // Strip off trailing file extension
+      const ext = path.extname(key);
+      const stripped = key.slice(0, -ext.length);
+
+      return colors.bold(colors.italic(stripped));
+    },
   });
 
   console.log(`${treeString}\n`);
