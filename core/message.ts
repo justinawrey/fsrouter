@@ -47,9 +47,15 @@ export function bootMessage(routes: Route[], rootDir: string): void {
   };
 
   // Build the json tree
+  // TODO: this is not exactly right for when cwd()
+  // is a level deeper than rootDir
   let root = tree[formattedRootDir];
-  for (const { relativePath } of routes) {
-    const parts = relativePath.split("/").slice(2);
+  for (let { relativePath } of routes) {
+    relativePath = relativePath.replace(relativeRootDir, "");
+    if (relativePath.startsWith("/")) {
+      relativePath = relativePath.slice(1);
+    }
+    const parts = relativePath.split("/");
 
     for (const part of parts) {
       if (!(part in root)) {
