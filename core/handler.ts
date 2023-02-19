@@ -102,13 +102,13 @@ export interface RouterOptions {
    * Whether or not an information message should be shown on startup.
    * Defaults to true.
    */
-  bootMessage?: boolean;
+  bootMessage: boolean;
 
   /**
    * Whether or not to output debug information to console.
    * Defaults to false.
    */
-  debug?: boolean;
+  debug: boolean;
 
   /**
    * Whether or not slugs of type :number should be automatically converted to numbers
@@ -120,8 +120,14 @@ export interface RouterOptions {
    *
    * Defaults to true.
    */
-  convertToNumber?: boolean;
+  convertToNumber: boolean;
 }
+
+const defaultOptions: RouterOptions = {
+  bootMessage: true,
+  debug: false,
+  convertToNumber: true,
+};
 
 /**
  * fsRouter creates a standard library Handler which handles requests
@@ -173,16 +179,17 @@ export interface RouterOptions {
  */
 export async function fsRouter(
   rootDir: string,
-  {
-    debug = false,
-    bootMessage = true,
-    convertToNumber = true,
-  }: RouterOptions = {},
+  options: Partial<RouterOptions> = {},
 ): Promise<http.Handler> {
-  setupLogger(debug);
+  const mergedOptions: RouterOptions = {
+    ...defaultOptions,
+    ...options,
+  };
+
+  setupLogger(mergedOptions.debug);
 
   log.debug("fsRouter initialized with root dir:", rootDir);
-  log.debug("fsRouter initialized with options:", { debug, bootMessage });
+  log.debug("fsRouter initialized with options:", mergedOptions);
 
   const routes = await discoverRoutes(rootDir);
   if (routes.length === 0) {
@@ -190,9 +197,9 @@ export async function fsRouter(
     Deno.exit(0);
   }
 
-  if (bootMessage) {
+  if (mergedOptions.bootMessage) {
     _bootMessage(routes, rootDir);
   }
 
-  return handleRoutes(routes, convertToNumber);
+  return handleRoutes(routes, mergedOptions.convertToNumber);
 }
