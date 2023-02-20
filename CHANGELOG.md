@@ -1,3 +1,10 @@
+## [3.1.0](https://github.com/justinawrey/fsrouter/compare/3.0.1...3.1.0) (2023-02-20)
+
+
+### Features
+
+* support deno deploy ([a9bf2bc](https://github.com/justinawrey/fsrouter/commit/a9bf2bc0a411aaff81a181a54ed90a9cc7743497))
+
 ## [3.0.1](https://github.com/justinawrey/fsrouter/compare/3.0.0...3.0.1) (2023-02-19)
 
 
