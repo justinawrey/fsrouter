@@ -1,4 +1,4 @@
-# :postbox: `fsrouter` | [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https://deno.land/x/fsrouter/mod.ts) [![deno module](https://shield.deno.dev/x/fsrouter)](https://deno.land/x/fsrouter) ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release.yml/badge.svg)
+# :postbox: `fsrouter` | [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https://deno.land/x/fsrouter/mod.ts) [![deno module](https://shield.deno.dev/x/fsrouter)](https://deno.land/x/fsrouter) ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release-automatic.yml/badge.svg)
 
 A file system based router for [Deno](https://deno.land). Supports
 [Deno Deploy](https://deno.com/deploy)!
