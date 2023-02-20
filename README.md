@@ -1,6 +1,7 @@
 # :postbox: `fsrouter` | [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https://deno.land/x/fsrouter/mod.ts) [![deno module](https://shield.deno.dev/x/fsrouter)](https://deno.land/x/fsrouter) ![release](https://github.com/justinawrey/fsrouter/actions/workflows/release.yml/badge.svg)
 
-A file system based router for [Deno](https://deno.land).
+A file system based router for [Deno](https://deno.land). Supports
+[Deno Deploy](https://deno.com/deploy)!
 
 ## Basic usage
 
@@ -18,8 +19,8 @@ my-app/
 ```
 
 Each "route file" must export a
-[FsHandler](https://deno.land/x/fsrouter@2.8.0/handler.ts?s=FsHandler) as its
-default export:
+[FsHandler](https://deno.land/x/fsrouter/mod.ts?s=FsHandler) as its default
+export:
 
 ```typescript
 // my-app/pages/blog/post.ts
@@ -99,7 +100,7 @@ Results in routes being served as follows:
 | `pages/blog/post.ts`  | `/blog/post` |
 
 An options object can be provided as the second argument to `fsRouter`. See
-[RouterOptions](https://deno.land/x/fsrouter@2.11.1/mod.ts?s=RouterOptions) for
+[RouterOptions](https://deno.land/x/fsrouter/mod.ts?s=RouterOptions) for
 details.
 
 ## Dynamic routes
@@ -156,7 +157,7 @@ export default (req: Request, slugs: Slugs) => {
 ```
 
 This automatic conversion behaviour can be disabled via
-[RouterOptions.convertToNumber](https://deno.land/x/fsrouter@2.11.1/mod.ts?s=RouterOptions).
+[RouterOptions.convertToNumber](https://deno.land/x/fsrouter/mod.ts?s=RouterOptions).
 
 ## Watch mode
 
@@ -181,11 +182,18 @@ following reasons:
   since it's very likely your script will include using `fsrouter` in tandem
   with some sort of file server, you'll likely need this permission grant
 
+When deploying to Deno Deploy, `--allow-write` is also required so `fsrouter`
+can generate a manifest file containing static imports.
+
 ## Deno Deploy
 
-This module uses dynamic imports to resolve file names to their respective
-routes. As Deno Deploy
+When running locally with the Deno CLI, this module uses dynamic imports to
+resolve file names to their respective routes. As Deno Deploy
 [does not support dynamic imports](https://github.com/denoland/deploy_feedback/issues/1),
-this module is not Deno Deploy compatible. There are workarounds available that
-involve generating static manifests using a sort of build-step -- in the future,
-supporting this type of workflow will be considered.
+a "manifest" file containing static imports for every route must be generated
+during development and committed to your linked repository. This is the same
+approach taken by [Fresh](https://fresh.deno.dev/), and is enabled by default.
+
+If you do not need to run your code in Deno Deploy, you can disable manifest
+generation with
+[RouterOptions.generateManifest](https://deno.land/x/fsrouter/mod.ts?s=RouterOptions).
