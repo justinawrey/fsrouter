@@ -3,7 +3,7 @@ import { fsRouter } from "../mod.ts";
 
 const handler = await fsRouter(
   path.fromFileUrl(import.meta.resolve("../example/pages")),
-  { bootMessage: false },
+  { bootMessage: false, generateManifest: false },
 );
 
 async function makeRequest(path: string): Promise<string> {
