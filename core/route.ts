@@ -62,6 +62,7 @@ export class Route {
   static async create(
     filePath: string,
     rootDir: string,
+    handler?: FsHandler,
   ): Promise<Route> {
     // Derive the correct route from raw file paths,
     // e.g. /example/blog/post.ts -> /blog/post (where example is the root directory)
@@ -72,7 +73,7 @@ export class Route {
       filePath,
       absPath,
       absRootDir,
-      (await import(absPath)).default as FsHandler,
+      handler ? handler : (await import(absPath)).default as FsHandler,
     );
   }
 

@@ -7,6 +7,7 @@ import {
 import { notFound } from "./response.ts";
 import { normalizeRootDir, Route } from "./route.ts";
 import { setupLogger } from "./log.ts";
+import { generateManifest } from "./manifest.ts";
 
 // Re-export
 export * from "./types.ts";
@@ -14,7 +15,10 @@ export * from "./types.ts";
 // Given a map of routes to their respective handlers, returns a single
 // handler that correctly forwards requests to the right handler.
 // If a route is hit that doesn't exist, the returned handler will 404.
-function handleRoutes(routes: Route[], options: RouterOptions): http.Handler {
+export function handleRoutes(
+  routes: Route[],
+  options: RouterOptions,
+): http.Handler {
   // Split routes into ones that are exact (don't have slugs) and ones that aren't
   const exactRoutes = routes.filter((route) => !route.hasSlugs);
   const slugRoutes = Route.sort(routes.filter((route) => route.hasSlugs));
@@ -64,7 +68,10 @@ function handleRoutes(routes: Route[], options: RouterOptions): http.Handler {
   };
 }
 
-async function discoverRoutes(rootDir: string): Promise<Route[]> {
+async function discoverRoutes(
+  rootDir: string,
+  options: RouterOptions,
+): Promise<Route[]> {
   const walkOpts: fs.WalkOptions = {
     // Exclude directories when walking the filesystem.  We only care
     // about files which have declared handlers in them.
@@ -90,9 +97,21 @@ async function discoverRoutes(rootDir: string): Promise<Route[]> {
   }
 
   log.debug("fs.walk found", files.length, "entries:", files);
-  return Promise.all(
+  const routes = await Promise.all(
     files.map((file) => Route.create(file.path, rootDir)),
   );
+
+  if (options.generateManifest) {
+    await generateManifest(routes, rootDir, options);
+  } else {
+    log.debug(
+      `Not generating manifest file because ${
+        colors.bold("RouterOptions.generateManifest")
+      } is false`,
+    );
+  }
+
+  return routes;
 }
 
 /**
@@ -122,12 +141,28 @@ export interface RouterOptions {
    * Defaults to true.
    */
   convertToNumber: boolean;
+
+  /**
+   * Whether or not a manifest file should be generated containing static imports for all routes.
+   * This manifest file is needed for Deno environments that do not support
+   * dynamic imports, e.g. Deno Deploy.
+   * The location of the manifest file is as a sibling to the supplied root directory.
+   *
+   * Set this option to false if you don't need this manifest, e.g.
+   * you're deploying to a Deno environment that supports dynamic imports.
+   *
+   * Defaults to true.
+   */
+  generateManifest: boolean;
+  _routes: Route[];
 }
 
-const defaultOptions: RouterOptions = {
+export const defaultOptions: RouterOptions = {
   bootMessage: true,
   debug: false,
   convertToNumber: true,
+  generateManifest: true,
+  _routes: [],
 };
 
 /**
@@ -193,7 +228,20 @@ export async function fsRouter(
   log.debug("fsRouter initialized with options:", mergedOptions);
 
   rootDir = normalizeRootDir(rootDir);
-  const routes = await discoverRoutes(rootDir);
+
+  let routes = mergedOptions._routes;
+  if (routes.length) {
+    log.debug(
+      "Routes supplied as option.  Not discovering routes with dynamic imports...",
+    );
+    log.debug("Supplied routes:", routes);
+  } else {
+    log.debug(
+      "No routes supplied as option.  Discovering routes with dynamic import...",
+    );
+    routes = await discoverRoutes(rootDir, mergedOptions);
+  }
+
   if (routes.length === 0) {
     errorRootDirEmpty(rootDir);
     Deno.exit(0);
