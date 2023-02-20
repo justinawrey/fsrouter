@@ -1,0 +1,9 @@
+name: Release Manual
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    uses: justinawrey/fsrouter/.github/workflows/release.yml@main
+    secrets: inherit

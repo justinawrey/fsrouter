@@ -1,0 +1,11 @@
+name: Release Automatic
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    uses: justinawrey/fsrouter/.github/workflows/release.yml@main
+    secrets: inherit
